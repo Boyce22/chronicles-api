@@ -10,3 +10,4 @@ public record AuthorDetailsDTO(Long id, String name, String lastName, String cpf
 		this(author.getId(), author.getName(), author.getLastName(), author.getCpf(), author.getBirthDate());
 	}
 }
+	
