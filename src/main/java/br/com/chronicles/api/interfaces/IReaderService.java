@@ -8,11 +8,11 @@ import br.com.chronicles.api.dto.ReaderUpdateDTO;
 
 public interface IReaderService {
 
-	List<ReaderDetailsDTO> findAll();
-
 	ReaderDetailsDTO register(ReaderRegisterDTO dto);
-
+	
 	ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id);
+
+	List<ReaderDetailsDTO> findAll();
 
 	void delete(Long id);
 	

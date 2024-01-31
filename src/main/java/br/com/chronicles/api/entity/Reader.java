@@ -36,6 +36,9 @@ public class Reader {
 
 	@Column(name = "reader_tx_lastName")
 	private String lastName;
+	
+	@Column(name = "reader_tx_email")
+	private String email;
 
 	@Column(name = "reader_dt_birth_date")
 	private LocalDate birthDate;
@@ -55,15 +58,15 @@ public class Reader {
 	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
 	private Boolean isActive;
 
+	@OneToOne
+	@JoinColumn(name = "reader_user_cd_id", referencedColumnName = "user_cd_id")
+	private User user;
+	
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
 		this.createdDate = LocalDate.now();
 	}
-
-	@OneToOne
-	@JoinColumn(name = "reader_user_cd_id", referencedColumnName = "user_cd_id")
-	private User user;
 
 	public Reader registrar(ReaderRegisterDTO dto) {
 		this.name = dto.name();
@@ -88,6 +91,7 @@ public class Reader {
 	public Reader active() {
 		this.isActive = true;
 		this.updatedDate = LocalDateTime.now();
+		this.disableDate = null;
 		return this;
 	}
 }

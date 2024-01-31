@@ -2,6 +2,7 @@ package br.com.chronicles.api.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -41,6 +43,9 @@ public class Author {
 
 	@Column(name = "author_tx_cpf")
 	private String cpf;
+	
+	@Column(name = "author_tx_email")
+	private String email;
 
 	@JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
 	@Column(name = "author_dt_birth_data")
@@ -57,16 +62,19 @@ public class Author {
 
 	@Column(name = "author_bl_is_active")
 	private Boolean isActive;
+	
+	@OneToMany(mappedBy = "author")
+	private List<Work> work;
 
+	@OneToOne
+	@JoinColumn(name = "author_user_cd_id", referencedColumnName = "user_cd_id")
+	private User user;
+	
 	@PrePersist
 	void prePersist() {
 		this.createdDate = LocalDate.now();
 		this.isActive = true;
 	}
-
-	@OneToOne
-	@JoinColumn(name = "author_user_cd_id", referencedColumnName = "user_cd_id")
-	private User user;
 
 	public Author registrar(AuthorRegisterDTO dto) {
 		this.name = dto.name();
@@ -94,6 +102,7 @@ public class Author {
 	public Author active() {
 		this.isActive = true;
 		this.updatedDate = LocalDateTime.now();
+		this.disableDate = null;
 		return this;
 	}
 

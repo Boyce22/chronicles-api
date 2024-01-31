@@ -20,5 +20,4 @@ public interface IAuthorService {
 	void active(Long id);
 
 	Author findById(Long id);
-
 }
