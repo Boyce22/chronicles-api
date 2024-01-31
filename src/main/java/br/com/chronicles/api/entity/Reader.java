@@ -3,6 +3,8 @@ package br.com.chronicles.api.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import br.com.chronicles.api.dto.ReaderRegisterDTO;
+import br.com.chronicles.api.dto.ReaderUpdateDTO;
 import br.com.chronicles.api.security.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +28,7 @@ public class Reader {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "reader_cd_id")
 	private Long id;
 
 	@Column(name = "reader_tx_name")
@@ -43,6 +46,9 @@ public class Reader {
 	@Column(name = "reader_dt_update_date")
 	private LocalDateTime updatedDate;
 
+	@Column(name = "reader_dt_disable_date")
+	private LocalDateTime disableDate;
+
 	@Column(name = "reader_dt_delete_date")
 	private LocalDateTime deleteDate;
 
@@ -51,10 +57,37 @@ public class Reader {
 
 	@PrePersist
 	void prePersist() {
+		this.isActive = true;
 		this.createdDate = LocalDate.now();
 	}
 
 	@OneToOne
 	@JoinColumn(name = "reader_user_cd_id", referencedColumnName = "user_cd_id")
 	private User user;
+
+	public Reader registrar(ReaderRegisterDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.birthDate = dto.birthDate();
+		return this;
+	}
+
+	public Reader atualizar(ReaderUpdateDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.birthDate = dto.birthDate();
+		return this;
+	}
+
+	public Reader disable() {
+		this.disableDate = LocalDateTime.now();
+		this.isActive = false;
+		return this;
+	}
+
+	public Reader active() {
+		this.isActive = true;
+		this.updatedDate = LocalDateTime.now();
+		return this;
+	}
 }

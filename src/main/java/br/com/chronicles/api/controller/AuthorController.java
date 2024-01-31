@@ -2,7 +2,6 @@ package br.com.chronicles.api.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +16,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.chronicles.api.dto.AuthorDetailsDTO;
 import br.com.chronicles.api.dto.AuthorRegisterDTO;
 import br.com.chronicles.api.dto.AuthorUpdateDTO;
-import br.com.chronicles.api.service.AuthorService;
+import br.com.chronicles.api.interfaces.IAuthorService;
 import jakarta.validation.Valid;
 
 @RequestMapping("/author")
 @RestController
 public class AuthorController {
 
-	@Autowired
-	private AuthorService authorService;
+	private final IAuthorService authorService;
+
+	public AuthorController(IAuthorService authorService) {
+		this.authorService = authorService;
+	}
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<AuthorDetailsDTO>> findAll() {
@@ -34,8 +36,7 @@ public class AuthorController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerAuthor(@RequestBody @Valid AuthorRegisterDTO dto,
-			UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<String> registerAuthor(@RequestBody @Valid AuthorRegisterDTO dto, UriComponentsBuilder uriBuilder) {
 		AuthorDetailsDTO author = authorService.register(dto);
 		String message = "Autor registrado com sucesso!";
 		return ResponseEntity.created(uriBuilder.path("author/{id}").buildAndExpand(author.id()).toUri()).body(message);
