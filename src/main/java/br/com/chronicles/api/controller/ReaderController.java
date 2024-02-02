@@ -37,7 +37,7 @@ public class ReaderController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@Valid @RequestBody ReaderRegisterDTO dto, UriComponentsBuilder uriBuilder){
-		String message = "Leito registrado com sucesso!";
+		String message = "Leitor registrado com sucesso!";
 		ReaderDetailsDTO reader = readerService.register(dto);
 		return ResponseEntity.created(uriBuilder.path("reader/{id}").buildAndExpand(reader.id()).toUri()).body(message);
 	}
@@ -46,7 +46,7 @@ public class ReaderController {
 	public ResponseEntity<ReaderDetailsDTO> update(@PathVariable Long id, @RequestBody ReaderUpdateDTO dto){
 		return ResponseEntity.ok(readerService.update(dto, id));
 	}
-
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		readerService.delete(id);

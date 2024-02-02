@@ -5,7 +5,9 @@ import java.util.List;
 import br.com.chronicles.api.dto.AuthorDetailsDTO;
 import br.com.chronicles.api.dto.AuthorRegisterDTO;
 import br.com.chronicles.api.dto.AuthorUpdateDTO;
+import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
 import br.com.chronicles.api.entity.Author;
+import br.com.chronicles.api.entity.Reader;
 
 public interface IAuthorService {
 
@@ -21,4 +23,5 @@ public interface IAuthorService {
 
 	Author findById(Long id);
 
+	AuthorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto);
 }
