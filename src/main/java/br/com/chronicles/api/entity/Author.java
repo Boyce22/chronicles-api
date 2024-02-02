@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.chronicles.api.dto.AuthorRegisterDTO;
 import br.com.chronicles.api.dto.AuthorUpdateDTO;
+import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
 import br.com.chronicles.api.security.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -72,7 +73,6 @@ public class Author {
 	
 	@PrePersist
 	void prePersist() {
-		this.createdDate = LocalDate.now();
 		this.isActive = true;
 	}
 
@@ -81,6 +81,7 @@ public class Author {
 		this.lastName = dto.lastName();
 		this.cpf = dto.cpf();
 		this.birthDate = dto.birthDate();
+		this.createdDate = LocalDate.now();
 		return this;
 	}
 
@@ -103,6 +104,15 @@ public class Author {
 		this.isActive = true;
 		this.updatedDate = LocalDateTime.now();
 		this.disableDate = null;
+		return this;
+	}
+
+	public Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
+		this.name = reader.getName();
+		this.lastName = reader.getLastName();
+		this.birthDate = reader.getBirthDate();
+		this.createdDate = reader.getCreatedDate();
+		this.cpf = dto.cpf();
 		return this;
 	}
 

@@ -35,6 +35,12 @@ public class ReaderService implements IReaderService {
 	public void delete(Long id) {
 		readerRepository.save(findById(id).disable());
 	}
+	
+	@Override
+	public void deletePermanently(Long id) {
+		readerRepository.delete(findById(id).disable());
+	}
+
 
 	@Override
 	public ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id) {
@@ -46,7 +52,8 @@ public class ReaderService implements IReaderService {
 		readerRepository.save(findById(id).active());
 	}
 	
-	private Reader findById(Long id) {
+	@Override
+	public Reader findById(Long id) {
 		return readerRepository.findById(id).orElseThrow(() -> new RuntimeException("Leitor não encontrado"));
 	}
 

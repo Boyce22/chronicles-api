@@ -65,13 +65,13 @@ public class Reader {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
-		this.createdDate = LocalDate.now();
 	}
 
 	public Reader registrar(ReaderRegisterDTO dto) {
 		this.name = dto.name();
 		this.lastName = dto.lastName();
 		this.birthDate = dto.birthDate();
+		this.createdDate = LocalDate.now();
 		return this;
 	}
 
