@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.chronicles.api.dto.ReaderDetailsDTO;
 import br.com.chronicles.api.dto.ReaderRegisterDTO;
 import br.com.chronicles.api.dto.ReaderUpdateDTO;
+import br.com.chronicles.api.entity.Reader;
 
 public interface IReaderService {
 
@@ -17,5 +18,9 @@ public interface IReaderService {
 	void delete(Long id);
 	
 	void active(Long id);
+	
+	Reader findById(Long id);
+
+	void deletePermanently(Long id);
 
 }

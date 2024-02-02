@@ -60,7 +60,6 @@ public class Work {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
-		this.createdDate = LocalDate.now();
 		this.releaseDate = LocalDate.now();
 	}
 
@@ -69,6 +68,7 @@ public class Work {
 		this.genre = dto.genre();
 		this.description = dto.description();
 		this.numberChapters = dto.numberChapters();
+		this.createdDate = LocalDate.now();
 		this.author = newAuthor;
 		return this;
 	}

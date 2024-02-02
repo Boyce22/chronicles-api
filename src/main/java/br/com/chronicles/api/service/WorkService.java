@@ -22,6 +22,7 @@ public class WorkService implements IWorkService {
 		this.authorService = authorService;
 	}
 
+	@Override
 	public WorkDetailsDTO create(WorkCreateDTO dto) {
 		Author author = authorService.findById(dto.authorId());
 		return new WorkDetailsDTO(workRepository.save(new Work().create(dto, author)));
