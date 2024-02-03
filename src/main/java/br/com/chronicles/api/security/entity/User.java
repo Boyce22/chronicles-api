@@ -1,18 +1,26 @@
 package br.com.chronicles.api.security.entity;
 
+import br.com.chronicles.api.dto.ReaderRegisterDTO;
 import br.com.chronicles.api.security.enuns.UserRole;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "users")
+@AllArgsConstructor
 @Table(name = "users")
+@Entity(name = "users")
 public class User {
-
+	
     @Id
     @Column(name = "user_cd_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +35,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", nullable = false)
     private UserRole userRole;
+
+	public User createUserWithReader(ReaderRegisterDTO dto) {
+		this.email = dto.email();
+		this.password = dto.password();
+		this.userRole = UserRole.LEITOR;
+		return this;
+	}
+
 
 }

@@ -67,11 +67,12 @@ public class Reader {
 		this.isActive = true;
 	}
 
-	public Reader registrar(ReaderRegisterDTO dto) {
+	public Reader registrar(ReaderRegisterDTO dto, User user) {
 		this.name = dto.name();
 		this.lastName = dto.lastName();
 		this.birthDate = dto.birthDate();
 		this.createdDate = LocalDate.now();
+		this.user = user;
 		return this;
 	}
 
@@ -94,4 +95,5 @@ public class Reader {
 		this.disableDate = null;
 		return this;
 	}
+	
 }
