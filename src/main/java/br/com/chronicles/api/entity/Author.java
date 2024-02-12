@@ -15,7 +15,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
@@ -66,9 +65,8 @@ public class Author {
 	
 	@OneToMany(mappedBy = "author")
 	private List<Work> work;
-
-	@OneToOne
-	@JoinColumn(name = "author_user_cd_id", referencedColumnName = "user_cd_id")
+	
+	@OneToOne(mappedBy = "author")
 	private User user;
 	
 	@PrePersist

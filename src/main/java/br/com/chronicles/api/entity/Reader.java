@@ -11,7 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -57,9 +56,8 @@ public class Reader {
 
 	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
 	private Boolean isActive;
-
-	@OneToOne
-	@JoinColumn(name = "reader_user_cd_id", referencedColumnName = "user_cd_id")
+	
+	@OneToOne(mappedBy = "reader")
 	private User user;
 	
 	@PrePersist
@@ -67,12 +65,11 @@ public class Reader {
 		this.isActive = true;
 	}
 
-	public Reader registrar(ReaderRegisterDTO dto, User user) {
+	public Reader registrar(ReaderRegisterDTO dto) {
 		this.name = dto.name();
 		this.lastName = dto.lastName();
 		this.birthDate = dto.birthDate();
 		this.createdDate = LocalDate.now();
-		this.user = user;
 		return this;
 	}
 

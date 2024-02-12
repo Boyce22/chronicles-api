@@ -3,7 +3,6 @@ package br.com.chronicles.api.security.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.api.dto.ReaderRegisterDTO;
 import br.com.chronicles.api.security.entity.User;
 import br.com.chronicles.api.security.interfaces.IUserService;
 import br.com.chronicles.api.security.repository.UserRepository;
@@ -16,10 +15,6 @@ public class UserAuthService implements IUserService {
 	
 	public UserAuthService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
-	}
-	
-	public User createUserWithReader(ReaderRegisterDTO dto) {
-		return userRepository.save(new User().createUserWithReader(dto));
 	}
 	
 	public User findUserByEmail(String email) {
