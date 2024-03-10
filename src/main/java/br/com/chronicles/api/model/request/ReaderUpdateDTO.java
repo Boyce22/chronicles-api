@@ -1,4 +1,4 @@
-package br.com.chronicles.api.dto;
+package br.com.chronicles.api.model.request;
 
 import java.time.LocalDate;
 

@@ -2,14 +2,12 @@ package br.com.chronicles.api.interfaces;
 
 import java.util.List;
 
-import br.com.chronicles.api.dto.ReaderDetailsDTO;
-import br.com.chronicles.api.dto.ReaderRegisterDTO;
-import br.com.chronicles.api.dto.ReaderUpdateDTO;
 import br.com.chronicles.api.entity.Reader;
+import br.com.chronicles.api.model.request.ReaderRegisterDTO;
+import br.com.chronicles.api.model.request.ReaderUpdateDTO;
+import br.com.chronicles.api.model.response.ReaderDetailsDTO;
 
 public interface IReaderService {
-
-	ReaderDetailsDTO register(ReaderRegisterDTO dto);
 	
 	ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id);
 
@@ -22,5 +20,7 @@ public interface IReaderService {
 	Reader findById(Long id);
 
 	void deletePermanently(Long id);
+
+	ReaderDetailsDTO register(ReaderRegisterDTO dto);
 
 }

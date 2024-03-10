@@ -3,7 +3,7 @@ package br.com.chronicles.api.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import br.com.chronicles.api.dto.WorkCreateDTO;
+import br.com.chronicles.api.model.request.WorkCreateDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.chronicles.api.dto.ReaderDetailsDTO;
-import br.com.chronicles.api.dto.ReaderRegisterDTO;
-import br.com.chronicles.api.dto.ReaderUpdateDTO;
 import br.com.chronicles.api.interfaces.IReaderService;
+import br.com.chronicles.api.model.request.ReaderRegisterDTO;
+import br.com.chronicles.api.model.request.ReaderUpdateDTO;
+import br.com.chronicles.api.model.response.ReaderDetailsDTO;
 import jakarta.validation.Valid;
 
 @RequestMapping("/reader")
@@ -36,10 +36,9 @@ public class ReaderController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@Valid @RequestBody ReaderRegisterDTO dto, UriComponentsBuilder uriBuilder){
-		String message = "Leitor registrado com sucesso!";
+	public ResponseEntity<ReaderDetailsDTO> register(@Valid @RequestBody ReaderRegisterDTO dto, UriComponentsBuilder uriBuilder){
 		ReaderDetailsDTO reader = readerService.register(dto);
-		return ResponseEntity.created(uriBuilder.path("reader/{id}").buildAndExpand(reader.id()).toUri()).body(message);
+		return ResponseEntity.created(uriBuilder.path("reader/{id}").buildAndExpand(reader.id()).toUri()).body(reader);
 	}
 	
 	@PutMapping("/update/{id}")

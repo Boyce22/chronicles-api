@@ -1,4 +1,4 @@
-package br.com.chronicles.api.dto;
+package br.com.chronicles.api.model.request;
 
 public record ReaderChangeRequestDTO(String cpf) {
 

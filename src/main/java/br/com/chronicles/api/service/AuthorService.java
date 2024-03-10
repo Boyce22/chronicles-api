@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.api.dto.AuthorDetailsDTO;
-import br.com.chronicles.api.dto.AuthorRegisterDTO;
-import br.com.chronicles.api.dto.AuthorUpdateDTO;
-import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
 import br.com.chronicles.api.entity.Author;
 import br.com.chronicles.api.entity.Reader;
 import br.com.chronicles.api.interfaces.IAuthorService;
+import br.com.chronicles.api.model.request.AuthorRegisterDTO;
+import br.com.chronicles.api.model.request.AuthorUpdateDTO;
+import br.com.chronicles.api.model.request.ReaderChangeRequestDTO;
+import br.com.chronicles.api.model.response.AuthorDetailsDTO;
 import br.com.chronicles.api.repository.AuthorRepository;
 
 @Service
