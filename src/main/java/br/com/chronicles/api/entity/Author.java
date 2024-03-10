@@ -6,17 +6,15 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.chronicles.api.dto.AuthorRegisterDTO;
-import br.com.chronicles.api.dto.AuthorUpdateDTO;
-import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
-import br.com.chronicles.api.security.entity.User;
+import br.com.chronicles.api.model.request.AuthorRegisterDTO;
+import br.com.chronicles.api.model.request.AuthorUpdateDTO;
+import br.com.chronicles.api.model.request.ReaderChangeRequestDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -65,9 +63,6 @@ public class Author {
 	
 	@OneToMany(mappedBy = "author")
 	private List<Work> work;
-	
-	@OneToOne(mappedBy = "author")
-	private User user;
 	
 	@PrePersist
 	void prePersist() {

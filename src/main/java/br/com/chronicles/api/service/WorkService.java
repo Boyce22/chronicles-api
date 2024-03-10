@@ -2,12 +2,12 @@ package br.com.chronicles.api.service;
 
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.api.dto.WorkCreateDTO;
-import br.com.chronicles.api.dto.WorkDetailsDTO;
 import br.com.chronicles.api.entity.Author;
 import br.com.chronicles.api.entity.Work;
 import br.com.chronicles.api.interfaces.IAuthorService;
 import br.com.chronicles.api.interfaces.IWorkService;
+import br.com.chronicles.api.model.request.WorkCreateDTO;
+import br.com.chronicles.api.model.response.WorkDetailsDTO;
 import br.com.chronicles.api.repository.WorkRepository;
 
 @Service

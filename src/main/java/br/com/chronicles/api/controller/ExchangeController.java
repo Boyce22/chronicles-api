@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.chronicles.api.dto.AuthorDetailsDTO;
-import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
 import br.com.chronicles.api.interfaces.IExchangeService;
+import br.com.chronicles.api.model.request.ReaderChangeRequestDTO;
+import br.com.chronicles.api.model.response.AuthorDetailsDTO;
 
 @RequestMapping("/exchange")
 @RestController

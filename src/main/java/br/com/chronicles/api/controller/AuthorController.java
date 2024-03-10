@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.chronicles.api.dto.AuthorDetailsDTO;
-import br.com.chronicles.api.dto.AuthorRegisterDTO;
-import br.com.chronicles.api.dto.AuthorUpdateDTO;
 import br.com.chronicles.api.interfaces.IAuthorService;
+import br.com.chronicles.api.model.request.AuthorRegisterDTO;
+import br.com.chronicles.api.model.request.AuthorUpdateDTO;
+import br.com.chronicles.api.model.response.AuthorDetailsDTO;
 import jakarta.validation.Valid;
 
 @RequestMapping("/author")

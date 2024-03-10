@@ -2,12 +2,12 @@ package br.com.chronicles.api.interfaces;
 
 import java.util.List;
 
-import br.com.chronicles.api.dto.AuthorDetailsDTO;
-import br.com.chronicles.api.dto.AuthorRegisterDTO;
-import br.com.chronicles.api.dto.AuthorUpdateDTO;
-import br.com.chronicles.api.dto.ReaderChangeRequestDTO;
 import br.com.chronicles.api.entity.Author;
 import br.com.chronicles.api.entity.Reader;
+import br.com.chronicles.api.model.request.AuthorRegisterDTO;
+import br.com.chronicles.api.model.request.AuthorUpdateDTO;
+import br.com.chronicles.api.model.request.ReaderChangeRequestDTO;
+import br.com.chronicles.api.model.response.AuthorDetailsDTO;
 
 public interface IAuthorService {
 

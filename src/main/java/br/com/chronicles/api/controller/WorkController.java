@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.chronicles.api.dto.WorkCreateDTO;
-import br.com.chronicles.api.dto.WorkDetailsDTO;
 import br.com.chronicles.api.interfaces.IWorkService;
+import br.com.chronicles.api.model.request.WorkCreateDTO;
+import br.com.chronicles.api.model.response.WorkDetailsDTO;
 
 @RestController
 @RequestMapping("/work")
