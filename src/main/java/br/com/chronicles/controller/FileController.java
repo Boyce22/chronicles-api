@@ -1,5 +1,6 @@
 package br.com.chronicles.controller;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class FileController {
 	}
 
 	@PostMapping
-	public ResponseEntity<DefaultResponse> upload(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<DefaultResponse> upload(@RequestParam("file") MultipartFile file) throws FileUploadException {
 		return ResponseEntity.ok(fileService.save(file));
 	}
 
