@@ -3,27 +3,28 @@ package br.com.chronicles.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.chronicles.interfaces.AuthorServiceImpl;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.interfaces.IAuthorService;
 import br.com.chronicles.model.entity.Author;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.AuthorRegisterDTO;
 import br.com.chronicles.model.request.AuthorUpdateDTO;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;
+import br.com.chronicles.model.response.DefaultResponse;
 import br.com.chronicles.repository.AuthorRepository;
 
 @Service
-public class AuthorService implements IAuthorService {
+public class AuthorService implements AuthorServiceImpl {
 
 	private final AuthorRepository authorRepository;
 
-	public AuthorService(AuthorRepository authorRepository) {
+	private AuthorService(AuthorRepository authorRepository) {
 		this.authorRepository = authorRepository;
 	}
 
-	@Override
+    @Override
 	public AuthorDetailsDTO register(AuthorRegisterDTO dto) {
 		return new AuthorDetailsDTO(authorRepository.save(new Author().registrar(dto)));
 	}
@@ -39,18 +40,25 @@ public class AuthorService implements IAuthorService {
 	}
 
 	@Override
-	public void disable(Long id) {
-		authorRepository.save(findById(id).disable());
+	public DefaultResponse disable(Long id) {
+		Author author = findById(id);
+		if (author.getIsActive()) {
+			authorRepository.save(author.disable());
+			return new DefaultResponse("User disabled successfully");
+		}
+		return new DefaultResponse("Error");
 	}
 
 	@Override
-	public void active(Long id) {
+	public DefaultResponse active(Long id) {
 		Author author = findById(id);
 		if (!author.getIsActive()) {
 			authorRepository.save(author.active());
+			return new DefaultResponse("User activated successfully");
 		}
+		return new DefaultResponse("Error");
 	}
-	
+
 	@Override
 	public AuthorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto) {
 		return new AuthorDetailsDTO(authorRepository.save(new Author().grantAuthorAccessToReader(reader, dto)));
@@ -60,7 +68,5 @@ public class AuthorService implements IAuthorService {
 	public Author findById(Long id) {
 		return authorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor não encontrado"));
 	}
-	
-	
-
+  
 }

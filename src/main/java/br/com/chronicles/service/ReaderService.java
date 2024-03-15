@@ -3,9 +3,9 @@ package br.com.chronicles.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.chronicles.interfaces.ReaderServiceImpl;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.interfaces.IReaderService;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
@@ -13,7 +13,7 @@ import br.com.chronicles.model.response.ReaderDetailsDTO;
 import br.com.chronicles.repository.ReaderRepository;
 
 @Service
-public class ReaderService implements IReaderService {
+public class ReaderService implements ReaderServiceImpl {
 
 	private final ReaderRepository readerRepository;
 

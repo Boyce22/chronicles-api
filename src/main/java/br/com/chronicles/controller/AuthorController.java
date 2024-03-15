@@ -2,6 +2,7 @@ package br.com.chronicles.controller;
 
 import java.util.List;
 
+import br.com.chronicles.interfaces.AuthorServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,21 +12,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.chronicles.interfaces.IAuthorService;
 import br.com.chronicles.model.request.AuthorRegisterDTO;
 import br.com.chronicles.model.request.AuthorUpdateDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;
+import br.com.chronicles.model.response.DefaultResponse;
 import jakarta.validation.Valid;
 
 @RequestMapping("/author")
 @RestController
 public class AuthorController {
 
-	private final IAuthorService authorService;
+	private final AuthorServiceImpl authorService;
 
-	public AuthorController(IAuthorService authorService) {
+	public AuthorController(AuthorServiceImpl authorService) {
 		this.authorService = authorService;
 	}
 
@@ -36,27 +36,23 @@ public class AuthorController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerAuthor(@RequestBody @Valid AuthorRegisterDTO dto, UriComponentsBuilder uriBuilder) {
-		AuthorDetailsDTO author = authorService.register(dto);
-		String message = "Autor registrado com sucesso!";
-		return ResponseEntity.created(uriBuilder.path("author/{id}").buildAndExpand(author.id()).toUri()).body(message);
+	public ResponseEntity<AuthorDetailsDTO> registerAuthor(@RequestBody @Valid AuthorRegisterDTO dto) {
+		return ResponseEntity.ok(authorService.register(dto));
 	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<AuthorDetailsDTO> updateAuthor(@RequestBody AuthorUpdateDTO dto, @PathVariable Long id) {
 		return ResponseEntity.ok(authorService.update(dto, id));
 	}
-	
+
 	@PutMapping("/active/{id}")
-	public ResponseEntity<AuthorDetailsDTO> activeAuthor(@PathVariable Long id) {
-		authorService.active(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<DefaultResponse> activeAuthor(@PathVariable Long id) {
+		return ResponseEntity.ok(authorService.active(id));
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
-		authorService.disable(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<DefaultResponse> deleteAuthor(@PathVariable Long id) {
+		return ResponseEntity.ok(authorService.disable(id));
 	}
 
 }

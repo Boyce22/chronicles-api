@@ -8,8 +8,9 @@ import br.com.chronicles.model.request.AuthorRegisterDTO;
 import br.com.chronicles.model.request.AuthorUpdateDTO;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;
+import br.com.chronicles.model.response.DefaultResponse;
 
-public interface IAuthorService {
+public interface AuthorServiceImpl {
 
 	AuthorDetailsDTO register(AuthorRegisterDTO dto);
 
@@ -17,9 +18,9 @@ public interface IAuthorService {
 
 	List<AuthorDetailsDTO> findAll();
 
-	void disable(Long id);
+	DefaultResponse disable(Long id);
 
-	void active(Long id);
+	DefaultResponse active(Long id);
 
 	Author findById(Long id);
 

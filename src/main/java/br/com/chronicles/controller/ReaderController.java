@@ -2,6 +2,7 @@ package br.com.chronicles.controller;
 
 import java.util.List;
 
+import br.com.chronicles.interfaces.ReaderServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.chronicles.interfaces.IReaderService;
 import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
 import br.com.chronicles.model.response.ReaderDetailsDTO;
@@ -23,9 +22,9 @@ import jakarta.validation.Valid;
 @RestController
 public class ReaderController {
 	
-	private final IReaderService readerService;
+	private final ReaderServiceImpl readerService;
 	
-	public ReaderController(IReaderService readerService) {
+	public ReaderController(ReaderServiceImpl readerService) {
 		this.readerService = readerService;
 	}
 	
@@ -36,9 +35,8 @@ public class ReaderController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<ReaderDetailsDTO> register(@Valid @RequestBody ReaderRegisterDTO dto, UriComponentsBuilder uriBuilder){
-		ReaderDetailsDTO reader = readerService.register(dto);
-		return ResponseEntity.created(uriBuilder.path("reader/{id}").buildAndExpand(reader.id()).toUri()).body(reader);
+	public ResponseEntity<ReaderDetailsDTO> register(@Valid @RequestBody ReaderRegisterDTO dto){
+		return ResponseEntity.ok(readerService.register(dto));
 	}
 	
 	@PutMapping("/update/{id}")

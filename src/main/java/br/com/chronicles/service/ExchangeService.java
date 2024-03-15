@@ -1,23 +1,23 @@
 package br.com.chronicles.service;
 
+import br.com.chronicles.interfaces.AuthorServiceImpl;
+import br.com.chronicles.interfaces.ExchangeServiceImpl;
+import br.com.chronicles.interfaces.ReaderServiceImpl;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.interfaces.IAuthorService;
-import br.com.chronicles.interfaces.IExchangeService;
-import br.com.chronicles.interfaces.IReaderService;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ExchangeService implements IExchangeService {
+public class ExchangeService implements ExchangeServiceImpl {
 
-	private final IAuthorService authorService;
+	private final AuthorServiceImpl authorService;
 
-	private final IReaderService readerService;
+	private final ReaderServiceImpl readerService;
 
-	public ExchangeService(IAuthorService authorService, IReaderService readerService) {
+	public ExchangeService(AuthorServiceImpl authorService, ReaderServiceImpl readerService) {
 		this.authorService = authorService;
 		this.readerService = readerService;
 	}
