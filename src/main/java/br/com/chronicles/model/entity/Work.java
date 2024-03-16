@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -53,23 +54,28 @@ public class Work {
 	@Column(name = "work_bl_is_active")
 	private Boolean isActive;
 
+	@OneToOne
+	@JoinColumn(name = "fk_file_cd_id", referencedColumnName = "file_cd_id")
+	private FileWork file;
+
 	@ManyToOne
-	@JoinColumn(name = "fk_author_cd_id", referencedColumnName  = "author_cd_id")
+	@JoinColumn(name = "fk_author_cd_id", referencedColumnName = "author_cd_id")
 	private Author author;
 
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
 		this.releaseDate = LocalDate.now();
+		this.createdDate = LocalDate.now();
 	}
 
-	public Work create(WorkCreateDTO dto, Author newAuthor) {
+	public Work create(WorkCreateDTO dto, Author newAuthor, FileWork file) {
 		this.title = dto.title();
 		this.genre = dto.genre();
 		this.description = dto.description();
-		this.numberChapters = dto.numberChapters();
-		this.createdDate = LocalDate.now();
+		this.numberChapters = file.getNumberChapters();
 		this.author = newAuthor;
+		this.file = file;
 		return this;
 	}
 

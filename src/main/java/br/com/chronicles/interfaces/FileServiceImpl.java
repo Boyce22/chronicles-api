@@ -1,12 +1,13 @@
 package br.com.chronicles.interfaces;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import java.io.IOException;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.chronicles.model.response.DefaultResponse;
+import br.com.chronicles.model.entity.FileWork;
 
 public interface FileServiceImpl {
 
-	DefaultResponse save(MultipartFile dto) throws FileUploadException;
+	FileWork save(MultipartFile dto) throws IOException;
 
 }

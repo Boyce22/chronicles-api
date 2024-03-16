@@ -1,12 +1,14 @@
 package br.com.chronicles.service;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import java.io.IOException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itextpdf.text.pdf.PdfReader;
+
 import br.com.chronicles.interfaces.FileServiceImpl;
-import br.com.chronicles.model.entity.File;
-import br.com.chronicles.model.response.DefaultResponse;
+import br.com.chronicles.model.entity.FileWork;
 import br.com.chronicles.repository.FileRepository;
 
 @Service
@@ -19,13 +21,13 @@ public class FileService implements FileServiceImpl {
 	}
 
 	@Override
-	public DefaultResponse save(MultipartFile file) throws FileUploadException {
-		try {
-			fileRepository.save(new File().create(file));
-			return new DefaultResponse("Arquivo salvo com sucesso!");
-		} catch (Exception e) {
-			throw new FileUploadException("Erro ao salvar o arquivo! Motivo");
-		}
+	public FileWork save(MultipartFile file) throws IOException {
+		return fileRepository.save(new FileWork().create(file, countNumberChapters(file)));
+	}
+
+	private Integer countNumberChapters(MultipartFile file) throws IOException {
+		PdfReader reader = new PdfReader(file.getInputStream());
+		return reader.getNumberOfPages();
 	}
 
 }
