@@ -9,7 +9,7 @@ public record WorkDetailsDTO(Long id, String title, String[] genre, String descr
 		LocalDate releaseDate, LocalDate createdDate, LocalDateTime updatedDate, Boolean isActive) {
 
 	public WorkDetailsDTO(Work work) {
-		this(work.getId(), work.getTitle(), work.getGenre(), work.getDescription(), work.getNumberChapters(),
+		this(work.getId(), work.getTitle(), work.getGenre(), work.getDescription(), work.getFile().getNumberChapters(),
 				work.getReleaseDate(), work.getCreatedDate(), work.getUpdatedDate(), work.getIsActive());
 	}
 }
