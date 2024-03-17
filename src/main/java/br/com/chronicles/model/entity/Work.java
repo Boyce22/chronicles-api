@@ -39,9 +39,6 @@ public class Work {
 	@Column(name = "work_tx_description")
 	private String description;
 
-	@Column(name = "work_nm_chapters")
-	private Integer numberChapters;
-
 	@Column(name = "work_dt_release_date")
 	private LocalDate releaseDate;
 
@@ -73,7 +70,6 @@ public class Work {
 		this.title = dto.title();
 		this.genre = dto.genre();
 		this.description = dto.description();
-		this.numberChapters = file.getNumberChapters();
 		this.author = newAuthor;
 		this.file = file;
 		return this;
