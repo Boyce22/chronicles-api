@@ -1,4 +1,4 @@
-# Chronicles - API
+# Chronicles - API 📚
 
 ### Sua porta de entrada para os mundos criativos dos pequenos autores, conectando suas histórias ao universo digital com simplicidade e eficiência..
 
