@@ -16,6 +16,7 @@ import br.com.chronicles.model.entity.Work;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
 import br.com.chronicles.repository.WorkRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class WorkService implements WorkServiceImpl {
@@ -41,10 +42,15 @@ public class WorkService implements WorkServiceImpl {
 		Author author = authorService.findById(dto.authorId());
 		FileWork file = fileService.save(pdf);
 
-		boolean isMature = validatorGenres.stream()
-				.map(validator -> validator.validator(dto))
+		boolean isMature = validatorGenres.stream().map(validator -> validator.validator(dto))
 				.anyMatch(validated -> validated);
 
 		return new WorkDetailsDTO(workRepository.save(Work.create(dto, author, file, isMature)));
+	}
+
+	@Override
+	public Work findById(Long id) {
+		return workRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Work not found with ID: " + id));
 	}
 }

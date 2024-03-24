@@ -19,7 +19,7 @@ public class AuthorService implements AuthorServiceImpl {
 
 	private final AuthorRepository authorRepository;
 
-	private AuthorService(AuthorRepository authorRepository) {
+	public AuthorService(AuthorRepository authorRepository) {
 		this.authorRepository = authorRepository;
 	}
 

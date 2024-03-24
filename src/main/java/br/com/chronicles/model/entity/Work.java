@@ -41,6 +41,9 @@ public class Work {
 
 	@Column(name = "work_dt_release_date")
 	private LocalDate releaseDate;
+	
+	@Column(name = "work_nm_rating")
+	private Double rating;
 
 	@Column(name = "work_dt_create_date")
 	private LocalDate createdDate;
@@ -82,6 +85,11 @@ public class Work {
 		work.isMature = isMature;
 		work.file = file;
 		return work;
+	}
+	
+	public Work rating(Double rating) {
+		this.rating = rating + rating;
+		return this;
 	}
 
 }
