@@ -51,6 +51,9 @@ public class Work {
 	@Column(name = "work_bl_is_active")
 	private Boolean isActive;
 
+	@Column(name = "work_bl_is_mature_content")
+	private Boolean isMature;
+
 	@OneToOne
 	@JoinColumn(name = "fk_file_cd_id", referencedColumnName = "file_cd_id")
 	private FileWork file;
@@ -70,12 +73,13 @@ public class Work {
 		return new Work();
 	}
 
-	public static Work create(WorkCreateDTO dto, Author newAuthor, FileWork file) {
+	public static Work create(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
 		Work work = create();
 		work.title = dto.title();
 		work.genre = dto.genre();
 		work.description = dto.description();
-		work.author = newAuthor;
+		work.author = author;
+		work.isMature = isMature;
 		work.file = file;
 		return work;
 	}
