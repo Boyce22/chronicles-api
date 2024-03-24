@@ -35,6 +35,11 @@ public class AuthorController {
 		return authors.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(authors);
 	}
 
+	@GetMapping("/reference/{reference}")
+	public ResponseEntity<List<AuthorDetailsDTO>> findByReference(@PathVariable String reference) {
+		return ResponseEntity.ok(authorService.findByReference(reference));
+	}
+
 	@PostMapping("/register")
 	public ResponseEntity<AuthorDetailsDTO> registerAuthor(@RequestBody @Valid AuthorRegisterDTO dto) {
 		return ResponseEntity.ok(authorService.register(dto));

@@ -37,6 +37,11 @@ public class AuthorService implements AuthorServiceImpl {
 	public List<AuthorDetailsDTO> findAll() {
 		return authorRepository.findAllActive().stream().map(AuthorDetailsDTO::new).toList();
 	}
+	
+	@Override
+	public List<AuthorDetailsDTO> findByReference(String reference){
+		return authorRepository.findByReference(reference).stream().map(AuthorDetailsDTO::new).toList();
+	}
 
 	@Override
 	public DefaultResponse disable(Long id) {

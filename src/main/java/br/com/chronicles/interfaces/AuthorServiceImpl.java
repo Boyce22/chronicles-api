@@ -25,4 +25,6 @@ public interface AuthorServiceImpl {
 	Author findById(Long id);
 
 	AuthorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto);
+
+	List<AuthorDetailsDTO> findByReference(String reference);
 }

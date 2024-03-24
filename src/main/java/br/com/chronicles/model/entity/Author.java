@@ -39,6 +39,9 @@ public class Author {
 	@Column(name = "author_tx_lastName")
 	private String lastName;
 
+	@Column(name = "author_tx_reference")
+	private String reference;
+
 	@Column(name = "author_tx_cpf")
 	private String cpf;
 
@@ -77,6 +80,7 @@ public class Author {
 		Author author = create();
 		author.name = dto.name();
 		author.lastName = dto.lastName();
+		author.reference = dto.reference();
 		author.cpf = dto.cpf();
 		author.birthDate = dto.birthDate();
 		author.createdDate = LocalDate.now();
