@@ -1,6 +1,6 @@
 package br.com.chronicles.enuns;
 
-public enum MatureBookGenres {
+public enum BookMatureGenres {
     EROTICO,
     PORNOGRAFICO,
     HORROR_EXTREMO,
@@ -15,11 +15,10 @@ public enum MatureBookGenres {
     VIOLACAO,
     BDSM,
     FICCAO_LGBTQ_PLUS,
-    ENSAIOS_POLITICOS_POLÊMICOS,
     FICCAO_POLITICAMENTE_INCORRETA,
     HORROR_SPLATTER,
     REALIDADE_CRUEL,
-    VIOLÊNCIA_GRATUITA,
+    VIOLENCIA_GRATUITA,
     FICCAO_DA_VIDA_REAL,
     ROMANCE_CRUEL,
     LITERATURA_EROTICA,
