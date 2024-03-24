@@ -78,7 +78,7 @@ public ResponseEntity<List<AuthorDetailsDTO>> findAll() {
 public class FileService {
 
   public FileWork save(MultipartFile file) throws IOException {
-    return fileRepository.save(new FileWork().create(file, countNumberChapters(file)));
+    return fileRepository.save(FileWork.create(file, countNumberChapters(file)));
   }
   
   private Integer countNumberChapters(MultipartFile file) throws IOException {
@@ -111,14 +111,19 @@ public interface AuthorServiceImpl {
 @Entity
 public class Author {
   ..atributos
-  
-  public Author registrar(AuthorRegisterDTO dto) {
-    this.name = dto.name();
-    this.lastName = dto.lastName();
-    this.cpf = dto.cpf();
-    this.birthDate = dto.birthDate();
-    this.createdDate = LocalDate.now();
-    return this;
+
+  private static Author create(){
+    return new Author();
+  }
+
+  public static Author registrar(AuthorRegisterDTO dto) {
+    Author author = create();
+    author.name = dto.name();
+    author.lastName = dto.lastName();
+    author.cpf = dto.cpf();
+    author.birthDate = dto.birthDate();
+    author.createdDate = LocalDate.now();
+    return author;
   }
 
 }
@@ -136,7 +141,7 @@ public class AuthorService implements AuthorServiceImpl {
   
   @Override
     public AuthorDetailsDTO register(AuthorRegisterDTO dto) {
-    return new AuthorDetailsDTO(authorRepository.save(new Author().registrar(dto)));
+    return new AuthorDetailsDTO(authorRepository.save(Author.registrar(dto)));
   }
   
   @Override
