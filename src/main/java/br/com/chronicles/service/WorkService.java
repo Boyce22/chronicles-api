@@ -32,7 +32,7 @@ public class WorkService implements WorkServiceImpl {
 	@Override
 	public WorkDetailsDTO create(WorkCreateDTO dto, MultipartFile pdf) throws IOException {
 		Author author = authorService.findById(dto.authorId());
-		return new WorkDetailsDTO(workRepository.save(new Work().create(dto, author, fileService.save(pdf))));
+		return new WorkDetailsDTO(workRepository.save(Work.create(dto, author, fileService.save(pdf))));
 	}
 
 }

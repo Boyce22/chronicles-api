@@ -22,7 +22,7 @@ public class FileService implements FileServiceImpl {
 
 	@Override
 	public FileWork save(MultipartFile file) throws IOException {
-		return fileRepository.save(new FileWork().create(file, countNumberChapters(file)));
+		return fileRepository.save(FileWork.create(file, countNumberChapters(file)));
 	}
 
 	private Integer countNumberChapters(MultipartFile file) throws IOException {

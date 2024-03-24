@@ -41,7 +41,7 @@ public class Author {
 
 	@Column(name = "author_tx_cpf")
 	private String cpf;
-	
+
 	@Column(name = "author_tx_email")
 	private String email;
 
@@ -60,22 +60,27 @@ public class Author {
 
 	@Column(name = "author_bl_is_active")
 	private Boolean isActive;
-	
+
 	@OneToMany(mappedBy = "author")
 	private List<Work> work;
-	
+
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
 	}
 
-	public Author registrar(AuthorRegisterDTO dto) {
-		this.name = dto.name();
-		this.lastName = dto.lastName();
-		this.cpf = dto.cpf();
-		this.birthDate = dto.birthDate();
-		this.createdDate = LocalDate.now();
-		return this;
+	private static Author create() {
+		return new Author();
+	}
+
+	public static Author registrar(AuthorRegisterDTO dto) {
+		Author author = create();
+		author.name = dto.name();
+		author.lastName = dto.lastName();
+		author.cpf = dto.cpf();
+		author.birthDate = dto.birthDate();
+		author.createdDate = LocalDate.now();
+		return author;
 	}
 
 	public Author update(AuthorUpdateDTO dto) {
@@ -100,13 +105,14 @@ public class Author {
 		return this;
 	}
 
-	public Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
-		this.name = reader.getName();
-		this.lastName = reader.getLastName();
-		this.birthDate = reader.getBirthDate();
-		this.createdDate = reader.getCreatedDate();
-		this.cpf = dto.cpf();
-		return this;
+	public static Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
+		Author author = create();
+		author.name = reader.getName();
+		author.lastName = reader.getLastName();
+		author.birthDate = reader.getBirthDate();
+		author.createdDate = reader.getCreatedDate();
+		author.cpf = dto.cpf();
+		return author;
 	}
 
 }

@@ -66,13 +66,18 @@ public class Work {
 		this.createdDate = LocalDate.now();
 	}
 
-	public Work create(WorkCreateDTO dto, Author newAuthor, FileWork file) {
-		this.title = dto.title();
-		this.genre = dto.genre();
-		this.description = dto.description();
-		this.author = newAuthor;
-		this.file = file;
-		return this;
+	public static Work create() {
+		return new Work();
+	}
+
+	public static Work create(WorkCreateDTO dto, Author newAuthor, FileWork file) {
+		Work work = create();
+		work.title = dto.title();
+		work.genre = dto.genre();
+		work.description = dto.description();
+		work.author = newAuthor;
+		work.file = file;
+		return work;
 	}
 
 }
