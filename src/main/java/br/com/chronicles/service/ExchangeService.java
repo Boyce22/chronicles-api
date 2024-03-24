@@ -1,10 +1,10 @@
 package br.com.chronicles.service;
 
+import org.springframework.stereotype.Service;
+
 import br.com.chronicles.interfaces.AuthorServiceImpl;
 import br.com.chronicles.interfaces.ExchangeServiceImpl;
 import br.com.chronicles.interfaces.ReaderServiceImpl;
-import org.springframework.stereotype.Service;
-
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;

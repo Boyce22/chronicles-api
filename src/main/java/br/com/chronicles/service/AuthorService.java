@@ -1,11 +1,10 @@
 package br.com.chronicles.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import br.com.chronicles.interfaces.AuthorServiceImpl;
 import org.springframework.stereotype.Service;
 
+import br.com.chronicles.interfaces.AuthorServiceImpl;
 import br.com.chronicles.model.entity.Author;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.AuthorRegisterDTO;
@@ -24,9 +23,9 @@ public class AuthorService implements AuthorServiceImpl {
 		this.authorRepository = authorRepository;
 	}
 
-    @Override
+	@Override
 	public AuthorDetailsDTO register(AuthorRegisterDTO dto) {
-		return new AuthorDetailsDTO(authorRepository.save(new Author().registrar(dto)));
+		return new AuthorDetailsDTO(authorRepository.save(Author.registrar(dto)));
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class AuthorService implements AuthorServiceImpl {
 
 	@Override
 	public List<AuthorDetailsDTO> findAll() {
-		return authorRepository.findAllActive().stream().map(AuthorDetailsDTO::new).collect(Collectors.toList());
+		return authorRepository.findAllActive().stream().map(AuthorDetailsDTO::new).toList();
 	}
 
 	@Override
@@ -61,12 +60,12 @@ public class AuthorService implements AuthorServiceImpl {
 
 	@Override
 	public AuthorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto) {
-		return new AuthorDetailsDTO(authorRepository.save(new Author().grantAuthorAccessToReader(reader, dto)));
+		return new AuthorDetailsDTO(authorRepository.save(Author.grantAuthorAccessToReader(reader, dto)));
 	}
 
 	@Override
 	public Author findById(Long id) {
 		return authorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor não encontrado"));
 	}
-  
+
 }

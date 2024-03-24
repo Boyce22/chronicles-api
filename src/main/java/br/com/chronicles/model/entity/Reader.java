@@ -33,7 +33,7 @@ public class Reader {
 
 	@Column(name = "reader_tx_lastName")
 	private String lastName;
-	
+
 	@Column(name = "reader_tx_email")
 	private String email;
 
@@ -54,18 +54,23 @@ public class Reader {
 
 	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
 	private Boolean isActive;
-	
+
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
 	}
 
-	public Reader registrar(ReaderRegisterDTO dto) {
-		this.name = dto.name();
-		this.lastName = dto.lastName();
-		this.birthDate = dto.birthDate();
-		this.createdDate = LocalDate.now();
-		return this;
+	private static Reader create() {
+		return new Reader();
+	}
+
+	public static Reader registrar(ReaderRegisterDTO dto) {
+		Reader reader = create();
+		reader.name = dto.name();
+		reader.lastName = dto.lastName();
+		reader.birthDate = dto.birthDate();
+		reader.createdDate = LocalDate.now();
+		return reader;
 	}
 
 	public Reader atualizar(ReaderUpdateDTO dto) {
@@ -87,5 +92,5 @@ public class Reader {
 		this.disableDate = null;
 		return this;
 	}
-	
+
 }

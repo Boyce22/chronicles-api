@@ -39,11 +39,16 @@ public class FileWork {
 	@Column(name = "file_nm_chapters")
 	private Integer numberChapters;
 
-	public FileWork create(MultipartFile file, Integer numberChapters) throws IOException {
-		this.name = file.getOriginalFilename();
-		this.data = file.getBytes();
-		this.numberChapters = numberChapters;
-		return this;
+	public static FileWork create() {
+		return new FileWork();
+	}
+
+	public static FileWork create(MultipartFile file, Integer numberChapters) throws IOException {
+		FileWork fileWork = create();
+		fileWork.name = file.getOriginalFilename();
+		fileWork.data = file.getBytes();
+		fileWork.numberChapters = numberChapters;
+		return fileWork;
 	}
 
 }
