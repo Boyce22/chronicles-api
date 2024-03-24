@@ -12,7 +12,7 @@ import br.com.chronicles.model.request.WorkCreateDTO;
 
 @Service
 public class MangaContentValidator implements ValidatorGenresImpl {
-	
+
 	private final MangaServiceImpl mangaService;
 
 	public MangaContentValidator(MangaServiceImpl mangaService) {
@@ -22,12 +22,9 @@ public class MangaContentValidator implements ValidatorGenresImpl {
 	@Override
 	public boolean validator(WorkCreateDTO dto) {
 		MangaMatureGenres[] mangaGenresEnum = mangaService.getMatureGenres();
-		List<String> mangaGenres = Arrays.stream(mangaGenresEnum)
-											.map(MangaMatureGenres::toString)
-											.toList();
-		
+		List<String> mangaGenres = Arrays.stream(mangaGenresEnum).map(MangaMatureGenres::toString).toList();
+
 		return Arrays.stream(dto.genre()).anyMatch(mangaGenres::contains);
 	}
-	
 
 }

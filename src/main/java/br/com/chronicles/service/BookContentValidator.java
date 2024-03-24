@@ -22,10 +22,8 @@ public class BookContentValidator implements ValidatorGenresImpl {
 	@Override
 	public boolean validator(WorkCreateDTO dto) {
 		BookMatureGenres[] booksGenresEnum = bookService.getMatureGenres();
-		
-		List<String> booksGenres = Arrays.stream(booksGenresEnum)
-											.map(BookMatureGenres::toString)
-											.toList();
+
+		List<String> booksGenres = Arrays.stream(booksGenresEnum).map(BookMatureGenres::toString).toList();
 
 		return Arrays.stream(dto.genre()).anyMatch(booksGenres::contains);
 	}
