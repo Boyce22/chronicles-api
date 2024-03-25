@@ -1,18 +1,22 @@
 package br.com.chronicles.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import br.com.chronicles.interfaces.ReaderServiceImpl;
+import br.com.chronicles.interfaces.WorkRatingServiceImpl;
 import br.com.chronicles.interfaces.WorkServiceImpl;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.entity.Work;
 import br.com.chronicles.model.entity.WorkReaderRating;
-import br.com.chronicles.model.request.WorkRating;
+import br.com.chronicles.model.request.WorkRatingDTO;
+import br.com.chronicles.model.response.WorkRatingDetailsDTO;
 import br.com.chronicles.repository.WorkReaderRatingRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class WorkReaderRatingService {
+public class WorkRatingService implements WorkRatingServiceImpl {
 
 	private final WorkReaderRatingRepository ratingRepository;
 
@@ -20,30 +24,37 @@ public class WorkReaderRatingService {
 
 	private final WorkServiceImpl workService;
 
-	public WorkReaderRatingService(WorkReaderRatingRepository ratingRepository, ReaderServiceImpl readerService,
+	public WorkRatingService(WorkReaderRatingRepository ratingRepository, ReaderServiceImpl readerService,
 			WorkServiceImpl workService) {
 		this.ratingRepository = ratingRepository;
 		this.readerService = readerService;
 		this.workService = workService;
 	}
 
-	public WorkReaderRating verifyIfExists(WorkRating dto) {
+	@Override
+	public WorkRatingDetailsDTO verifyIfExists(WorkRatingDTO dto) {
 		Long workReaderRatingId = ratingRepository.existsByAuthorId(dto.authorId());
 		return workReaderRatingId != null ? updateRating(dto, workReaderRatingId) : createRating(dto);
 	}
-
-	private WorkReaderRating createRating(WorkRating dto) {
-		Reader reader = readerService.findById(dto.authorId());
-		Work work = workService.findById(dto.workId());
-		return ratingRepository.save(WorkReaderRating.create(dto, reader, work));
+	
+	@Override
+	public List<Double> getRating(Long workId){
+		return ratingRepository.getRating(workId);
 	}
 
-	private WorkReaderRating updateRating(WorkRating dto, Long id) {
+	private WorkRatingDetailsDTO createRating(WorkRatingDTO dto) {
 		Reader reader = readerService.findById(dto.authorId());
 		Work work = workService.findById(dto.workId());
-		return ratingRepository.save(findById(id).update(dto, reader, work));
+		return new WorkRatingDetailsDTO(ratingRepository.save(WorkReaderRating.create(dto, reader, work)));
 	}
 
+	private WorkRatingDetailsDTO updateRating(WorkRatingDTO dto, Long id) {
+		Reader reader = readerService.findById(dto.authorId());
+		Work work = workService.findById(dto.workId());
+		return new WorkRatingDetailsDTO(ratingRepository.save(findById(id).update(dto, reader, work)));
+	}
+
+	@Override
 	public WorkReaderRating findById(Long id) {
 		return ratingRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Rating not found with ID: " + id));

@@ -1,6 +1,6 @@
 package br.com.chronicles.model.entity;
 
-import br.com.chronicles.model.request.WorkRating;
+import br.com.chronicles.model.request.WorkRatingDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +42,7 @@ public class WorkReaderRating {
 		return new WorkReaderRating();
 	}
 
-	public static WorkReaderRating create(WorkRating dto, Reader reader, Work work) {
+	public static WorkReaderRating create(WorkRatingDTO dto, Reader reader, Work work) {
 		WorkReaderRating workReaderRating = create();
 		workReaderRating.rating = dto.rating();
 		workReaderRating.reader = reader;
@@ -50,7 +50,7 @@ public class WorkReaderRating {
 		return workReaderRating;
 	}
 
-	public WorkReaderRating update(WorkRating dto, Reader reader, Work work) {
+	public WorkReaderRating update(WorkRatingDTO dto, Reader reader, Work work) {
 		this.rating = dto.rating();
 		this.reader = reader;
 		this.work = work;
