@@ -42,8 +42,6 @@
 
 ### Padrão Spring MVC
 
-#### O padrão Spring MVC (Model-View-Controller) é uma arquitetura de software utilizada no desenvolvimento de aplicativos web em Java. Ele separa as preocupações do aplicativo em três componentes principais:
-
 - Modelo (Model): Definir classes de modelo para representar os dados da aplicação, juntamente com as camadas de acesso a dados (por exemplo, DAOs ou repositórios) para interagir com o banco de dados.
 
 ```java
@@ -135,13 +133,16 @@ public class Author {
   }
 
   public static Author registrar(AuthorRegisterDTO dto) {
-    Author author = create();
-    author.name = dto.name();
-    author.lastName = dto.lastName();
-    author.cpf = dto.cpf();
-    author.birthDate = dto.birthDate();
-    author.createdDate = LocalDate.now();
-    return author;
+    this.name = dto.name();
+    this.lastName = dto.lastName();
+    this.cpf = dto.cpf();
+    this.birthDate = dto.birthDate();
+    this.createdDate = LocalDate.now();
+    return this;
+  }
+
+  public static AuthorDTO registar(AuthorRegisterDTO dto){
+    return new AuthorDTO(Author.create().registrar(dto));
   }
 
 }
