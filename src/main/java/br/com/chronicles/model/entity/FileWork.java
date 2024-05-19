@@ -16,12 +16,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "file")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "file")
+@Entity(name = "file")
 public class FileWork {
 
 	@Id

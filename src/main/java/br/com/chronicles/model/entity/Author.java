@@ -18,10 +18,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "author")
@@ -52,11 +54,11 @@ public class Author {
 	@Column(name = "author_dt_birth_data")
 	private LocalDate birthDate;
 
-	@Column(name = "author_dt_create_data")
-	private LocalDate createdDate;
+	@Column(name = "author_dt_createAt")
+	private LocalDate createdAt;
 
-	@Column(name = "author_dt_update_data")
-	private LocalDateTime updatedDate;
+	@Column(name = "author_dt_updateAt")
+	private LocalDateTime updatedAt;
 
 	@Column(name = "author_dt_disable_date")
 	private LocalDateTime disableDate;
@@ -83,7 +85,7 @@ public class Author {
 		author.reference = dto.reference();
 		author.cpf = dto.cpf();
 		author.birthDate = dto.birthDate();
-		author.createdDate = LocalDate.now();
+		author.createdAt = LocalDate.now();
 		return author;
 	}
 
@@ -92,7 +94,7 @@ public class Author {
 		this.lastName = dto.lastName();
 		this.cpf = dto.cpf();
 		this.birthDate = dto.birthDate();
-		this.updatedDate = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 		return this;
 	}
 
@@ -104,7 +106,7 @@ public class Author {
 
 	public Author active() {
 		this.isActive = true;
-		this.updatedDate = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 		this.disableDate = null;
 		return this;
 	}
@@ -114,7 +116,7 @@ public class Author {
 		author.name = reader.getName();
 		author.lastName = reader.getLastName();
 		author.birthDate = reader.getBirthDate();
-		author.createdDate = reader.getCreatedDate();
+		author.createdAt = reader.getCreatedAt();
 		author.cpf = dto.cpf();
 		return author;
 	}

@@ -10,6 +10,6 @@ public record WorkDetailsDTO(Long id, String title, String[] genre, String descr
 
 	public WorkDetailsDTO(Work work) {
 		this(work.getId(), work.getTitle(), work.getGenre(), work.getDescription(), work.getFile().getNumberChapters(),
-				work.getReleaseDate(), work.getCreatedDate(), work.getUpdatedDate(), work.getIsActive());
+				work.getReleasedAt(), work.getCreatedAt(), work.getUpdatedAt(), work.getIsActive());
 	}
 }

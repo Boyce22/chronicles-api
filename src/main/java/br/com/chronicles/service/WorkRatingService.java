@@ -33,23 +33,23 @@ public class WorkRatingService implements WorkRatingServiceImpl {
 
 	@Override
 	public WorkRatingDetailsDTO verifyIfExists(WorkRatingDTO dto) {
-		Long workReaderRatingId = ratingRepository.existsByAuthorId(dto.authorId());
+		Long workReaderRatingId = ratingRepository.existsByReaderId(dto.readerId());
 		return workReaderRatingId != null ? updateRating(dto, workReaderRatingId) : createRating(dto);
 	}
-	
+
 	@Override
-	public List<Double> getRating(Long workId){
+	public List<Double> getRating(Long workId) {
 		return ratingRepository.getRating(workId);
 	}
 
 	private WorkRatingDetailsDTO createRating(WorkRatingDTO dto) {
-		Reader reader = readerService.findById(dto.authorId());
+		Reader reader = readerService.findById(dto.readerId());
 		Work work = workService.findById(dto.workId());
 		return new WorkRatingDetailsDTO(ratingRepository.save(WorkReaderRating.create(dto, reader, work)));
 	}
 
 	private WorkRatingDetailsDTO updateRating(WorkRatingDTO dto, Long id) {
-		Reader reader = readerService.findById(dto.authorId());
+		Reader reader = readerService.findById(dto.readerId());
 		Work work = workService.findById(dto.workId());
 		return new WorkRatingDetailsDTO(ratingRepository.save(findById(id).update(dto, reader, work)));
 	}
