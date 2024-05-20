@@ -40,8 +40,6 @@
 
 ## Arquitetura e Princípios de Desenvolvimento
 
-### Padrão Spring MVC
-
 - Modelo (Model): Definir classes de modelo para representar os dados da aplicação, juntamente com as camadas de acesso a dados (por exemplo, DAOs ou repositórios) para interagir com o banco de dados.
 
 ```java
@@ -59,25 +57,6 @@ public class Author {
   private String lastName;
 
 }
-```
-- Visão (View): Camada de apresentação do aplicativo, responsável por exibir os dados ao usuário e interagir com ele. Tradicionalmente, as visualizações eram páginas JSP ou HTML geradas pelo servidor. Atualmente, a tendência é separar responsabilidades, deixando a exibição de conteúdo para o frontend.
-
-```html
-  <html>
-  <head>
-      <title>Lista de Produtos</title>
-  </head>
-  <body>
-      <h1>Lista de Produtos</h1>
-      <ul>
-          <c:forEach var="produto" items="${produtos}">
-              <li>${produto.nome} - R$ ${produto.preco}</li>
-          </c:forEach>
-      </ul>
-  </body>
-  </html>
-```
-
 - Controlador (Controller): Implementar controladores para lidar com as solicitações do usuário, processar os dados, chamar métodos de serviço e determinar qual visão deve ser retornada.
 
 ```java
