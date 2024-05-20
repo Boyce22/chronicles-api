@@ -45,7 +45,7 @@ public class WorkRatingService implements WorkRatingServiceImpl {
 	private WorkRatingDetailsDTO createRating(WorkRatingDTO dto) {
 		Reader reader = readerService.findById(dto.readerId());
 		Work work = workService.findById(dto.workId());
-		return new WorkRatingDetailsDTO(ratingRepository.save(WorkReaderRating.create(dto, reader, work)));
+		return new WorkRatingDetailsDTO(ratingRepository.save(WorkReaderRating.create().register(dto, reader, work)));
 	}
 
 	private WorkRatingDetailsDTO updateRating(WorkRatingDTO dto, Long id) {

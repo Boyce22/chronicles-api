@@ -38,16 +38,15 @@ public class WorkReaderRating {
 	@Column(name = "work_rating")
 	private Double rating;
 
-	private static WorkReaderRating create() {
+	public static WorkReaderRating create() {
 		return new WorkReaderRating();
 	}
 
-	public static WorkReaderRating create(WorkRatingDTO dto, Reader reader, Work work) {
-		WorkReaderRating workReaderRating = create();
-		workReaderRating.rating = dto.rating();
-		workReaderRating.reader = reader;
-		workReaderRating.work = work;
-		return workReaderRating;
+	public WorkReaderRating register(WorkRatingDTO dto, Reader reader, Work work) {
+		this.rating = dto.rating();
+		this.reader = reader;
+		this.work = work;
+		return this;
 	}
 
 	public WorkReaderRating update(WorkRatingDTO dto, Reader reader, Work work) {

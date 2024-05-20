@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +31,6 @@ public class Comentary {
 	@Column(name = "com_tx_content")
 	private String content;
 
-
 	@Column(name = "com_dt_createdAt")
 	private LocalDateTime createdAt;
 
@@ -42,7 +41,24 @@ public class Comentary {
 	@JoinColumn(name = "fk_work_cd_id")
 	private Work work;
 
-	@OneToOne
-	@JoinColumn(name = "fk_reader_cd_id", referencedColumnName = "reader_cd_id")
-	private Reader readerId;
+	@ManyToOne
+	@JoinColumn(name = "fk_reader_cd_id")
+	private Reader reader;
+
+	@PrePersist
+	void prePersist() {
+		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
+	}
+
+	public static Comentary create() {
+		return new Comentary();
+	}
+
+	public Comentary register(String content, Work work, Reader reader) {
+		this.content = content;
+		this.work = work;
+		this.reader = reader;
+		return this;
+	}
 }

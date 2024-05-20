@@ -72,21 +72,21 @@ public class Author {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
+		this.createdAt = LocalDate.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 
-	private static Author create() {
+	public static Author create() {
 		return new Author();
 	}
 
-	public static Author registrar(AuthorRegisterDTO dto) {
-		Author author = create();
-		author.name = dto.name();
-		author.lastName = dto.lastName();
-		author.reference = dto.reference();
-		author.cpf = dto.cpf();
-		author.birthDate = dto.birthDate();
-		author.createdAt = LocalDate.now();
-		return author;
+	public Author registrar(AuthorRegisterDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.reference = dto.reference();
+		this.cpf = dto.cpf();
+		this.birthDate = dto.birthDate();
+		return this;
 	}
 
 	public Author update(AuthorUpdateDTO dto) {
@@ -111,14 +111,13 @@ public class Author {
 		return this;
 	}
 
-	public static Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
-		Author author = create();
-		author.name = reader.getName();
-		author.lastName = reader.getLastName();
-		author.birthDate = reader.getBirthDate();
-		author.createdAt = reader.getCreatedAt();
-		author.cpf = dto.cpf();
-		return author;
+	public Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
+		this.name = reader.getName();
+		this.lastName = reader.getLastName();
+		this.birthDate = reader.getBirthDate();
+		this.createdAt = reader.getCreatedAt();
+		this.cpf = dto.cpf();
+		return this;
 	}
 
 }

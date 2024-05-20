@@ -18,8 +18,8 @@ import br.com.chronicles.model.request.ReaderUpdateDTO;
 import br.com.chronicles.model.response.ReaderDetailsDTO;
 import jakarta.validation.Valid;
 
-@RequestMapping("/reader")
 @RestController
+@RequestMapping("/reader")
 public class ReaderController {
 	
 	private final ReaderServiceImpl readerService;

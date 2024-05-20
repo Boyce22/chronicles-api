@@ -2,6 +2,7 @@ package br.com.chronicles.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -57,22 +59,26 @@ public class Reader {
 	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
 	private Boolean isActive;
 
+	@OneToMany(mappedBy = "reader")
+	private List<Comentary> comments;
+
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
+		this.createdAt = LocalDate.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 
-	private static Reader create() {
+	public static Reader create() {
 		return new Reader();
 	}
 
-	public static Reader registrar(ReaderRegisterDTO dto) {
-		Reader reader = create();
-		reader.name = dto.name();
-		reader.lastName = dto.lastName();
-		reader.birthDate = dto.birthDate();
-		reader.createdAt = LocalDate.now();
-		return reader;
+	public Reader registrar(ReaderRegisterDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.birthDate = dto.birthDate();
+		this.createdAt = LocalDate.now();
+		return this;
 	}
 
 	public Reader atualizar(ReaderUpdateDTO dto) {

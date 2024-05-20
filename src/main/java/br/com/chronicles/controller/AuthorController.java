@@ -19,8 +19,8 @@ import br.com.chronicles.model.response.AuthorDetailsDTO;
 import br.com.chronicles.model.response.DefaultResponse;
 import jakarta.validation.Valid;
 
-@RequestMapping("/author")
 @RestController
+@RequestMapping("/author")
 public class AuthorController {
 
 	private final AuthorServiceImpl authorService;

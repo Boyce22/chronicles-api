@@ -45,7 +45,7 @@ public class WorkService implements WorkServiceImpl {
 		boolean isMature = validatorGenres.stream().map(validator -> validator.validator(dto))
 				.anyMatch(validated -> validated);
 
-		return new WorkDetailsDTO(workRepository.save(Work.create(dto, author, file, isMature)));
+		return new WorkDetailsDTO(workRepository.save(Work.create().register(dto, author, file, isMature)));
 	}
 
 	@Override

@@ -44,8 +44,8 @@ public class Work {
 	private String description;
 
 	@Column(name = "work_dt_releasedAt")
-	private LocalDate releasedAt;
-	
+	private LocalDateTime releasedAt;
+
 	@Column(name = "work_nm_rating")
 	private Double rating;
 
@@ -60,7 +60,7 @@ public class Work {
 
 	@Column(name = "work_bl_is_mature_content")
 	private Boolean isMature;
-	
+
 	@OneToMany(mappedBy = "work")
 	private List<Comentary> comments;
 
@@ -75,7 +75,8 @@ public class Work {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
-		this.releasedAt= LocalDate.now();
+		this.releasedAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 		this.createdAt = LocalDate.now();
 	}
 
@@ -83,17 +84,16 @@ public class Work {
 		return new Work();
 	}
 
-	public static Work create(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
-		Work work = create();
-		work.title = dto.title();
-		work.genre = dto.genre();
-		work.description = dto.description();
-		work.author = author;
-		work.isMature = isMature;
-		work.file = file;
-		return work;
+	public Work register(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
+		this.title = dto.title();
+		this.genre = dto.genre();
+		this.description = dto.description();
+		this.author = author;
+		this.isMature = isMature;
+		this.file = file;
+		return this;
 	}
-	
+
 	public Work rating(Double rating) {
 		this.rating = rating + rating;
 		return this;

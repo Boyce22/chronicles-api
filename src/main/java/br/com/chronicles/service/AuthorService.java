@@ -25,7 +25,7 @@ public class AuthorService implements AuthorServiceImpl {
 
 	@Override
 	public AuthorDetailsDTO register(AuthorRegisterDTO dto) {
-		return new AuthorDetailsDTO(authorRepository.save(Author.registrar(dto)));
+		return new AuthorDetailsDTO(authorRepository.save(Author.create().registrar(dto)));
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class AuthorService implements AuthorServiceImpl {
 	public List<AuthorDetailsDTO> findAll() {
 		return authorRepository.findAllActive().stream().map(AuthorDetailsDTO::new).toList();
 	}
-	
+
 	@Override
-	public List<AuthorDetailsDTO> findByReference(String reference){
+	public List<AuthorDetailsDTO> findByReference(String reference) {
 		return authorRepository.findByReference(reference).stream().map(AuthorDetailsDTO::new).toList();
 	}
 
@@ -65,7 +65,7 @@ public class AuthorService implements AuthorServiceImpl {
 
 	@Override
 	public AuthorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto) {
-		return new AuthorDetailsDTO(authorRepository.save(Author.grantAuthorAccessToReader(reader, dto)));
+		return new AuthorDetailsDTO(authorRepository.save(Author.create().grantAuthorAccessToReader(reader, dto)));
 	}
 
 	@Override

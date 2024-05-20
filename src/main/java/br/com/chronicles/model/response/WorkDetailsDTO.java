@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import br.com.chronicles.model.entity.Work;
 
 public record WorkDetailsDTO(Long id, String title, String[] genre, String description, Integer numberChapters,
-		LocalDate releaseDate, LocalDate createdDate, LocalDateTime updatedDate, Boolean isActive) {
+		LocalDateTime releaseDate, LocalDate createdAt, LocalDateTime updatedAt, Boolean isActive) {
 
 	public WorkDetailsDTO(Work work) {
 		this(work.getId(), work.getTitle(), work.getGenre(), work.getDescription(), work.getFile().getNumberChapters(),

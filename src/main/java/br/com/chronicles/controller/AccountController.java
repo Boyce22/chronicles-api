@@ -10,8 +10,8 @@ import br.com.chronicles.interfaces.AccountServiceImpl;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.AuthorDetailsDTO;
 
-@RequestMapping("/account")
 @RestController
+@RequestMapping("/account")
 public class AccountController {
 
 	private final AccountServiceImpl accountService;
