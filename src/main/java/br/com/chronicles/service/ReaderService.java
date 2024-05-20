@@ -42,7 +42,7 @@ public class ReaderService implements ReaderServiceImpl {
 
 	@Override
 	public ReaderDetailsDTO register(ReaderRegisterDTO dto) {
-		return new ReaderDetailsDTO(readerRepository.save(Reader.registrar(dto)));
+		return new ReaderDetailsDTO(readerRepository.save(Reader.create().registrar(dto)));
 	}
 
 	@Override

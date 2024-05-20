@@ -16,12 +16,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "file")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "file")
+@Entity(name = "file")
 public class FileWork {
 
 	@Id
@@ -43,12 +43,11 @@ public class FileWork {
 		return new FileWork();
 	}
 
-	public static FileWork create(MultipartFile file, Integer numberChapters) throws IOException {
-		FileWork fileWork = create();
-		fileWork.name = file.getOriginalFilename();
-		fileWork.data = file.getBytes();
-		fileWork.numberChapters = numberChapters;
-		return fileWork;
+	public FileWork register(MultipartFile file, Integer numberChapters) throws IOException {
+		this.name = file.getOriginalFilename();
+		this.data = file.getBytes();
+		this.numberChapters = numberChapters;
+		return this;
 	}
 
 }

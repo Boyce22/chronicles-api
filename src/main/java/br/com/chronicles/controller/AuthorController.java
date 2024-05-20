@@ -19,8 +19,8 @@ import br.com.chronicles.model.response.AuthorDetailsDTO;
 import br.com.chronicles.model.response.DefaultResponse;
 import jakarta.validation.Valid;
 
-@RequestMapping("/author")
 @RestController
+@RequestMapping("/author")
 public class AuthorController {
 
 	private final AuthorServiceImpl authorService;
@@ -33,6 +33,11 @@ public class AuthorController {
 	public ResponseEntity<List<AuthorDetailsDTO>> findAll() {
 		List<AuthorDetailsDTO> authors = authorService.findAll();
 		return authors.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(authors);
+	}
+
+	@GetMapping("/reference/{reference}")
+	public ResponseEntity<List<AuthorDetailsDTO>> findByReference(@PathVariable String reference) {
+		return ResponseEntity.ok(authorService.findByReference(reference));
 	}
 
 	@PostMapping("/register")

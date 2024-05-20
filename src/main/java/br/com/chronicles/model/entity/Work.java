@@ -2,6 +2,7 @@ package br.com.chronicles.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import br.com.chronicles.model.request.WorkCreateDTO;
 import jakarta.persistence.Column;
@@ -11,18 +12,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "work")
+@Entity(name = "work")
 public class Work {
 
 	@Id
@@ -39,20 +43,26 @@ public class Work {
 	@Column(name = "work_tx_description")
 	private String description;
 
-	@Column(name = "work_dt_release_date")
-	private LocalDate releaseDate;
+	@Column(name = "work_dt_releasedAt")
+	private LocalDateTime releasedAt;
 
-	@Column(name = "work_dt_create_date")
-	private LocalDate createdDate;
+	@Column(name = "work_nm_rating")
+	private Double rating;
 
-	@Column(name = "work_dt_update_date")
-	private LocalDateTime updatedDate;
+	@Column(name = "work_dt_createdAt")
+	private LocalDate createdAt;
+
+	@Column(name = "work_dt_updatedAt")
+	private LocalDateTime updatedAt;
 
 	@Column(name = "work_bl_is_active")
 	private Boolean isActive;
 
 	@Column(name = "work_bl_is_mature_content")
 	private Boolean isMature;
+
+	@OneToMany(mappedBy = "work")
+	private List<Comentary> comments;
 
 	@OneToOne
 	@JoinColumn(name = "fk_file_cd_id", referencedColumnName = "file_cd_id")
@@ -65,23 +75,28 @@ public class Work {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
-		this.releaseDate = LocalDate.now();
-		this.createdDate = LocalDate.now();
+		this.releasedAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
+		this.createdAt = LocalDate.now();
 	}
 
 	public static Work create() {
 		return new Work();
 	}
 
-	public static Work create(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
-		Work work = create();
-		work.title = dto.title();
-		work.genre = dto.genre();
-		work.description = dto.description();
-		work.author = author;
-		work.isMature = isMature;
-		work.file = file;
-		return work;
+	public Work register(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
+		this.title = dto.title();
+		this.genre = dto.genre();
+		this.description = dto.description();
+		this.author = author;
+		this.isMature = isMature;
+		this.file = file;
+		return this;
+	}
+
+	public Work rating(Double rating) {
+		this.rating = rating + rating;
+		return this;
 	}
 
 }

@@ -18,10 +18,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "author")
@@ -39,6 +41,9 @@ public class Author {
 	@Column(name = "author_tx_lastName")
 	private String lastName;
 
+	@Column(name = "author_tx_reference")
+	private String reference;
+
 	@Column(name = "author_tx_cpf")
 	private String cpf;
 
@@ -49,11 +54,11 @@ public class Author {
 	@Column(name = "author_dt_birth_data")
 	private LocalDate birthDate;
 
-	@Column(name = "author_dt_create_data")
-	private LocalDate createdDate;
+	@Column(name = "author_dt_createAt")
+	private LocalDate createdAt;
 
-	@Column(name = "author_dt_update_data")
-	private LocalDateTime updatedDate;
+	@Column(name = "author_dt_updateAt")
+	private LocalDateTime updatedAt;
 
 	@Column(name = "author_dt_disable_date")
 	private LocalDateTime disableDate;
@@ -67,20 +72,21 @@ public class Author {
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
+		this.createdAt = LocalDate.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 
-	private static Author create() {
+	public static Author create() {
 		return new Author();
 	}
 
-	public static Author registrar(AuthorRegisterDTO dto) {
-		Author author = create();
-		author.name = dto.name();
-		author.lastName = dto.lastName();
-		author.cpf = dto.cpf();
-		author.birthDate = dto.birthDate();
-		author.createdDate = LocalDate.now();
-		return author;
+	public Author registrar(AuthorRegisterDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.reference = dto.reference();
+		this.cpf = dto.cpf();
+		this.birthDate = dto.birthDate();
+		return this;
 	}
 
 	public Author update(AuthorUpdateDTO dto) {
@@ -88,7 +94,7 @@ public class Author {
 		this.lastName = dto.lastName();
 		this.cpf = dto.cpf();
 		this.birthDate = dto.birthDate();
-		this.updatedDate = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 		return this;
 	}
 
@@ -100,19 +106,18 @@ public class Author {
 
 	public Author active() {
 		this.isActive = true;
-		this.updatedDate = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 		this.disableDate = null;
 		return this;
 	}
 
-	public static Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
-		Author author = create();
-		author.name = reader.getName();
-		author.lastName = reader.getLastName();
-		author.birthDate = reader.getBirthDate();
-		author.createdDate = reader.getCreatedDate();
-		author.cpf = dto.cpf();
-		return author;
+	public Author grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
+		this.name = reader.getName();
+		this.lastName = reader.getLastName();
+		this.birthDate = reader.getBirthDate();
+		this.createdAt = reader.getCreatedAt();
+		this.cpf = dto.cpf();
+		return this;
 	}
 
 }

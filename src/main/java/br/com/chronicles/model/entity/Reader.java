@@ -2,6 +2,7 @@ package br.com.chronicles.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
@@ -10,13 +11,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "reader")
@@ -40,37 +44,41 @@ public class Reader {
 	@Column(name = "reader_dt_birth_date")
 	private LocalDate birthDate;
 
-	@Column(name = "reader_dt_create_date")
-	private LocalDate createdDate;
+	@Column(name = "reader_dt_createAt")
+	private LocalDate createdAt;
 
-	@Column(name = "reader_dt_update_date")
-	private LocalDateTime updatedDate;
+	@Column(name = "reader_dt_updateAt")
+	private LocalDateTime updatedAt;
 
-	@Column(name = "reader_dt_disable_date")
-	private LocalDateTime disableDate;
+	@Column(name = "reader_dt_disabledAt")
+	private LocalDateTime disabledAt;
 
-	@Column(name = "reader_dt_delete_date")
-	private LocalDateTime deleteDate;
+	@Column(name = "reader_dt_deletedAt")
+	private LocalDateTime deletedAt;
 
 	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
 	private Boolean isActive;
 
+	@OneToMany(mappedBy = "reader")
+	private List<Comentary> comments;
+
 	@PrePersist
 	void prePersist() {
 		this.isActive = true;
+		this.createdAt = LocalDate.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 
-	private static Reader create() {
+	public static Reader create() {
 		return new Reader();
 	}
 
-	public static Reader registrar(ReaderRegisterDTO dto) {
-		Reader reader = create();
-		reader.name = dto.name();
-		reader.lastName = dto.lastName();
-		reader.birthDate = dto.birthDate();
-		reader.createdDate = LocalDate.now();
-		return reader;
+	public Reader registrar(ReaderRegisterDTO dto) {
+		this.name = dto.name();
+		this.lastName = dto.lastName();
+		this.birthDate = dto.birthDate();
+		this.createdAt = LocalDate.now();
+		return this;
 	}
 
 	public Reader atualizar(ReaderUpdateDTO dto) {
@@ -81,15 +89,15 @@ public class Reader {
 	}
 
 	public Reader disable() {
-		this.disableDate = LocalDateTime.now();
+		this.disabledAt = LocalDateTime.now();
 		this.isActive = false;
 		return this;
 	}
 
 	public Reader active() {
 		this.isActive = true;
-		this.updatedDate = LocalDateTime.now();
-		this.disableDate = null;
+		this.updatedAt = LocalDateTime.now();
+		this.disabledAt = null;
 		return this;
 	}
 
