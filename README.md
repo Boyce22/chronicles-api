@@ -57,6 +57,7 @@ public class Author {
   private String lastName;
 
 }
+```
 - Controlador (Controller): Implementar controladores para lidar com as solicitações do usuário, processar os dados, chamar métodos de serviço e determinar qual visão deve ser retornada.
 
 ```java
@@ -66,9 +67,9 @@ public ResponseEntity<List<AuthorDetailsDTO>> findAll() {
   return authors.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(authors);
 }
 ```
+
 - Service Layer: É uma camada adicional que encapsula a lógica de negócios da aplicação
 ```java
-
 @Service
 public class FileService {
 
@@ -82,7 +83,6 @@ public class FileService {
   }
 
 }
-
 ```
 
 ### Clean Code e SOLID
@@ -100,6 +100,7 @@ public interface AuthorServiceImpl {
   ...more
 }
 ```
+
 - Princípio da Responsabilidade Única (Single Responsibility Principle - SRP): Garantir que cada classe ou método tenha apenas uma responsabilidade.
 
 ```java
