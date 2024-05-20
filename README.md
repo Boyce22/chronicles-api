@@ -40,10 +40,6 @@
 
 ## Arquitetura e Princípios de Desenvolvimento
 
-### Padrão Spring MVC
-
-#### O padrão Spring MVC (Model-View-Controller) é uma arquitetura de software utilizada no desenvolvimento de aplicativos web em Java. Ele separa as preocupações do aplicativo em três componentes principais:
-
 - Modelo (Model): Definir classes de modelo para representar os dados da aplicação, juntamente com as camadas de acesso a dados (por exemplo, DAOs ou repositórios) para interagir com o banco de dados.
 
 ```java
@@ -62,24 +58,6 @@ public class Author {
 
 }
 ```
-- Visão (View): Camada de apresentação do aplicativo, responsável por exibir os dados ao usuário e interagir com ele. Tradicionalmente, as visualizações eram páginas JSP ou HTML geradas pelo servidor. Atualmente, a tendência é separar responsabilidades, deixando a exibição de conteúdo para o frontend.
-
-```html
-  <html>
-  <head>
-      <title>Lista de Produtos</title>
-  </head>
-  <body>
-      <h1>Lista de Produtos</h1>
-      <ul>
-          <c:forEach var="produto" items="${produtos}">
-              <li>${produto.nome} - R$ ${produto.preco}</li>
-          </c:forEach>
-      </ul>
-  </body>
-  </html>
-```
-
 - Controlador (Controller): Implementar controladores para lidar com as solicitações do usuário, processar os dados, chamar métodos de serviço e determinar qual visão deve ser retornada.
 
 ```java
@@ -89,9 +67,9 @@ public ResponseEntity<List<AuthorDetailsDTO>> findAll() {
   return authors.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(authors);
 }
 ```
+
 - Service Layer: É uma camada adicional que encapsula a lógica de negócios da aplicação
 ```java
-
 @Service
 public class FileService {
 
@@ -105,7 +83,6 @@ public class FileService {
   }
 
 }
-
 ```
 
 ### Clean Code e SOLID
@@ -123,6 +100,7 @@ public interface AuthorServiceImpl {
   ...more
 }
 ```
+
 - Princípio da Responsabilidade Única (Single Responsibility Principle - SRP): Garantir que cada classe ou método tenha apenas uma responsabilidade.
 
 ```java
@@ -135,13 +113,16 @@ public class Author {
   }
 
   public static Author registrar(AuthorRegisterDTO dto) {
-    Author author = create();
-    author.name = dto.name();
-    author.lastName = dto.lastName();
-    author.cpf = dto.cpf();
-    author.birthDate = dto.birthDate();
-    author.createdDate = LocalDate.now();
-    return author;
+    this.name = dto.name();
+    this.lastName = dto.lastName();
+    this.cpf = dto.cpf();
+    this.birthDate = dto.birthDate();
+    this.createdDate = LocalDate.now();
+    return this;
+  }
+
+  public static AuthorDTO registar(AuthorRegisterDTO dto){
+    return new AuthorDTO(Author.create().registrar(dto));
   }
 
 }
