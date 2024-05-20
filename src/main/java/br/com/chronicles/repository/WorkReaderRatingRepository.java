@@ -12,10 +12,10 @@ import br.com.chronicles.model.entity.WorkReaderRating;
 @Repository
 public interface WorkReaderRatingRepository extends JpaRepository<WorkReaderRating, Long> {
 
-	@Query(value = "SELECT work_reader_rating_id FROM work_reader_rating WHERE fk_reader_cd_id = :readerId LIMIT 1", nativeQuery = true)
+	@Query(value = "SELECT wk FROM work_reader_rating wk WHERE wk.reader.id = :readerId")
 	Long existsByReaderId(@Param("readerId") Long readerId);
 
-	@Query(value = "SELECT work_rating FROM work_reader_rating WHERE fk_work_cd_id = :workId", nativeQuery = true)
+	@Query(value = "SELECT wk FROM work_reader_rating wk WHERE wk.work.id = :workId")
 	List<Double> getRating(@Param("workId") Long workId);
 
 }

@@ -11,7 +11,7 @@ import br.com.chronicles.model.entity.Reader;
 @Repository
 public interface ReaderRepository extends JpaRepository<Reader, Long> {
 
-	@Query(value = "SELECT * FROM reader re WHERE  re.reader_bl_is_active = true", nativeQuery = true)
+	@Query(value = "SELECT re FROM reader re WHERE  re.isActive = true")
 	List<Reader> findAllActive();
 
 }
