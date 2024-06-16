@@ -1,47 +1,56 @@
 package br.com.chronicles.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.chronicles.interfaces.GenreServiceImpl;
+import br.com.chronicles.model.request.GenreRegisterWithListDTO;
+import br.com.chronicles.model.response.GenreDetailsDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.chronicles.enuns.BookGenres;
-import br.com.chronicles.enuns.BookMatureGenres;
-import br.com.chronicles.enuns.MangaGenres;
-import br.com.chronicles.enuns.MangaMatureGenres;
-import br.com.chronicles.interfaces.BookServiceImpl;
-import br.com.chronicles.interfaces.MangaServiceImpl;
+import java.util.List;
 
 @RestController
 @RequestMapping("/genres")
 public class GenresController {
 
-	private final MangaServiceImpl mangaService;
+    private final GenreServiceImpl genreService;
 
-	private final BookServiceImpl bookService;
+    public GenresController(GenreServiceImpl genreService) {
+        this.genreService = genreService;
+    }
 
-	public GenresController(MangaServiceImpl mangaService, BookServiceImpl bookService) {
-		this.mangaService = mangaService;
-		this.bookService = bookService;
-	}
+    @GetMapping("manga/all")
+    public ResponseEntity<List<GenreDetailsDTO>> getAllGenres() {
+        List<GenreDetailsDTO> genres = genreService.getMangaGenres();
+        return !genres.isEmpty() ? ResponseEntity.ok(genres) : ResponseEntity.notFound().build();
+    }
 
-	@GetMapping("manga/all")
-	public MangaGenres[] getAllGenres() {
-		return mangaService.getGenres();
-	}
+    @GetMapping("manga/mature/all")
+    public ResponseEntity<List<GenreDetailsDTO>> getAllMatureGenres() {
+        List<GenreDetailsDTO> genres = genreService.getMangaMatureGenres();
+        return !genres.isEmpty() ? ResponseEntity.ok(genres) : ResponseEntity.notFound().build();
+    }
 
-	@GetMapping("manga/mature/all")
-	public MangaMatureGenres[] getAllMatureGenres() {
-		return mangaService.getMatureGenres();
-	}
+    @GetMapping("book/all")
+    public ResponseEntity<List<GenreDetailsDTO>> getAllBookGenres() {
+        List<GenreDetailsDTO> genres = genreService.getBookGenres();
+        return !genres.isEmpty() ? ResponseEntity.ok(genres) : ResponseEntity.notFound().build();
+    }
 
-	@GetMapping("book/all")
-	public BookGenres[] getAllBookGenres() {
-		return bookService.getGenres();
-	}
+    @GetMapping("book/mature/all")
+    public ResponseEntity<List<GenreDetailsDTO>> getAllMatureBookGenres() {
+        List<GenreDetailsDTO> genres = genreService.getBookMatureGenres();
+        return !genres.isEmpty() ? ResponseEntity.ok(genres) : ResponseEntity.notFound().build();
+    }
 
-	@GetMapping("book/mature/all")
-	public BookMatureGenres[] getAllMatureBookGenres() {
-		return bookService.getMatureGenres();
-	}
+    @PostMapping("book/register")
+    public ResponseEntity<List<GenreDetailsDTO>> registerBookGenres(@RequestBody GenreRegisterWithListDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerBookGenre(dto));
+    }
+
+    @PostMapping("manga/register")
+    public ResponseEntity<List<GenreDetailsDTO>> registerMangaGenres(@RequestBody GenreRegisterWithListDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerMangaGenre(dto));
+    }
 
 }

@@ -32,7 +32,7 @@ public class WorkRatingService implements WorkRatingServiceImpl {
 	}
 
 	@Override
-	public WorkRatingDetailsDTO verifyIfExists(WorkRatingDTO dto) {
+	public WorkRatingDetailsDTO verifyIfExistsAndRateWork(WorkRatingDTO dto) {
 		Long workReaderRatingId = ratingRepository.existsByReaderId(dto.readerId());
 		return workReaderRatingId != null ? updateRating(dto, workReaderRatingId) : createRating(dto);
 	}

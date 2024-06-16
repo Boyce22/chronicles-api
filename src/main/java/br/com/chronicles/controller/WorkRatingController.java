@@ -23,9 +23,9 @@ public class WorkRatingController {
 		this.ratingService = ratingService;
 	}
 
-	@PostMapping
+	@PostMapping("/rate")
 	public ResponseEntity<WorkRatingDetailsDTO> rating(@RequestBody WorkRatingDTO dto) {
-		return ResponseEntity.ok(ratingService.verifyIfExists(dto));
+		return ResponseEntity.ok(ratingService.verifyIfExistsAndRateWork(dto));
 	}
 
 	@GetMapping("/{id}")

@@ -8,7 +8,7 @@ import br.com.chronicles.model.response.WorkRatingDetailsDTO;
 
 public interface WorkRatingServiceImpl {
 
-	WorkRatingDetailsDTO verifyIfExists(WorkRatingDTO dto);
+	WorkRatingDetailsDTO verifyIfExistsAndRateWork(WorkRatingDTO dto);
 
 	WorkReaderRating findById(Long id);
 
