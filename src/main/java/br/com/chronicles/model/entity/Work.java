@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -87,9 +88,11 @@ public class Work {
         return new Work();
     }
 
-    public Work register(WorkCreateDTO dto, Author author, FileWork file, boolean isMature) {
+    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Author author, FileWork file, boolean isMature) {
         this.title = dto.title();
         this.description = dto.description();
+        this.bookGenres = areAllBookGenres(genres) ? (List<BookGenre>) genres : null;
+        this.mangaGenres = areAllMangaGenres(genres) ? (List<MangaGenre>) genres : null;
         this.author = author;
         this.isMature = isMature;
         this.file = file;
@@ -99,6 +102,20 @@ public class Work {
     public Work rating(Double rating) {
         this.rating = rating + rating;
         return this;
+    }
+
+    public List<String> getGenres() {
+        return this.bookGenres != null ? this.bookGenres.stream().map(Genre::getName).toList() :
+                this.mangaGenres != null ? this.mangaGenres.stream().map(Genre::getName).toList() :
+                        Collections.emptyList();
+    }
+
+    private boolean areAllMangaGenres(List<? extends Genre> genres) {
+        return genres.stream().allMatch(genre -> genre instanceof MangaGenre);
+    }
+
+    private boolean areAllBookGenres(List<? extends Genre> genres) {
+        return genres.stream().allMatch(genre -> genre instanceof BookGenre);
     }
 
 }
