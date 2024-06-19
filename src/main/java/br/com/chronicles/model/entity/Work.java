@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -62,7 +61,7 @@ public class Work {
             joinColumns = @JoinColumn(name = "work_cd_id"),
             inverseJoinColumns = @JoinColumn(name = "fk_book_genre_cd_id", referencedColumnName = "genre_cd_id::uuid")
     )
-    List<BookGenre> bookGenres;
+    private List<BookGenre> bookGenres;
 
     @ManyToMany
     @JoinTable(
@@ -70,14 +69,14 @@ public class Work {
             joinColumns = @JoinColumn(name = "work_cd_id"),
             inverseJoinColumns = @JoinColumn(name = "fk_manga_genre_cd_id", referencedColumnName = "genre_cd_id::uuid")
     )
-    List<MangaGenre> mangaGenres;
+    private List<MangaGenre> mangaGenres;
 
     @ManyToOne
     @JoinColumn(name = "fk_author_cd_id", referencedColumnName = "author_cd_id")
     private Author author;
 
     @PrePersist
-    void prePersist() {
+    private void prePersist() {
         this.isActive = true;
         this.releasedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
@@ -91,8 +90,8 @@ public class Work {
     public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Author author, FileWork file, boolean isMature) {
         this.title = dto.title();
         this.description = dto.description();
-        this.bookGenres = areAllBookGenres(genres) ? (List<BookGenre>) genres : null;
-        this.mangaGenres = areAllMangaGenres(genres) ? (List<MangaGenre>) genres : null;
+        this.bookGenres = areAllBookGenres(genres) ? convertToBookGenreList(genres) : null;
+        this.mangaGenres = areAllMangaGenres(genres) ? convertToMangaGenreList(genres) : null;
         this.author = author;
         this.isMature = isMature;
         this.file = file;
@@ -105,17 +104,30 @@ public class Work {
     }
 
     public List<String> getGenres() {
-        return this.bookGenres != null ? this.bookGenres.stream().map(Genre::getName).toList() :
-                this.mangaGenres != null ? this.mangaGenres.stream().map(Genre::getName).toList() :
-                        Collections.emptyList();
+        return this.bookGenres.isEmpty() ?
+                this.mangaGenres.stream().map(Genre::getName).toList()
+                :
+                this.bookGenres.stream().map(Genre::getName).toList();
     }
 
     private boolean areAllMangaGenres(List<? extends Genre> genres) {
-        return genres.stream().allMatch(genre -> genre instanceof MangaGenre);
+        return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof MangaGenre);
     }
 
     private boolean areAllBookGenres(List<? extends Genre> genres) {
-        return genres.stream().allMatch(genre -> genre instanceof BookGenre);
+        return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof BookGenre);
+    }
+
+    private List<MangaGenre> convertToMangaGenreList(List<? extends Genre> genres) {
+        return genres.stream()
+                .map(genre -> (MangaGenre) genre)
+                .toList();
+    }
+
+    private List<BookGenre> convertToBookGenreList(List<? extends Genre> genres) {
+        return genres.stream()
+                .map(genre -> (BookGenre) genre)
+                .toList();
     }
 
 }

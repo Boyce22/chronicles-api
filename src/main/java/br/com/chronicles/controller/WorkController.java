@@ -3,12 +3,10 @@ package br.com.chronicles.controller;
 import br.com.chronicles.interfaces.WorkServiceImpl;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
+import br.com.chronicles.model.response.WorkNonWithFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,6 +32,17 @@ public class WorkController {
             ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body("File type not supported");
         }
         return ResponseEntity.ok(workService.create(dto, file));
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<List<WorkNonWithFile>> findAll() {
+        List<WorkNonWithFile> works = workService.findAll();
+        return works.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(works);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkDetailsDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(workService.findWorkDetailsById(id));
     }
 
 }

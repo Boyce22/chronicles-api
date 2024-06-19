@@ -8,10 +8,10 @@ import java.util.List;
 
 public record WorkDetailsDTO(Long id, String title, List<String> genre, String description, Integer numberChapters,
                              LocalDateTime releaseDate, LocalDate createdAt, LocalDateTime updatedAt,
-                             Boolean isActive) {
+                             Boolean isActive, byte[] file) {
 
-    public WorkDetailsDTO(Work work, List<String> genres) {
-        this(work.getId(), work.getTitle(), genres, work.getDescription(), work.getFile().getNumberChapters(),
-                work.getReleasedAt(), work.getCreatedAt(), work.getUpdatedAt(), work.getIsActive());
+    public WorkDetailsDTO(Work work) {
+        this(work.getId(), work.getTitle(), work.getGenres(), work.getDescription(), work.getFile().getNumberChapters(),
+                work.getReleasedAt(), work.getCreatedAt(), work.getUpdatedAt(), work.getIsActive(), work.getFile().getData());
     }
 }

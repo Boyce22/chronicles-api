@@ -13,7 +13,7 @@ public class BookContentValidator implements ValidatorGenresImpl {
 
     @Override
     public boolean validator(WorkCreateDTO dto, List<? extends Genre> genres) {
-        return dto.bookGenres().length != 0 && genres.stream().anyMatch(Genre::isMature);
+        return dto.bookGenres() != null && genres.stream().anyMatch(Genre::isMature);
     }
 
 }
