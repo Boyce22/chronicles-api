@@ -1,38 +1,37 @@
 package br.com.chronicles.service;
 
-import org.springframework.stereotype.Service;
-
 import br.com.chronicles.interfaces.AccountServiceImpl;
-import br.com.chronicles.interfaces.AuthorServiceImpl;
+import br.com.chronicles.interfaces.CollaboratorServiceImpl;
 import br.com.chronicles.interfaces.ReaderServiceImpl;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
-import br.com.chronicles.model.response.AuthorDetailsDTO;
+import br.com.chronicles.model.response.CollaboratorDetailsDTO;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService implements AccountServiceImpl {
 
-	private final AuthorServiceImpl authorService;
+    private final CollaboratorServiceImpl collaboratorService;
 
-	private final ReaderServiceImpl readerService;
+    private final ReaderServiceImpl readerService;
 
-	public AccountService(AuthorServiceImpl authorService, ReaderServiceImpl readerService) {
-		this.authorService = authorService;
-		this.readerService = readerService;
-	}
+    public AccountService(CollaboratorServiceImpl collaboratorService, ReaderServiceImpl readerService) {
+        this.collaboratorService = collaboratorService;
+        this.readerService = readerService;
+    }
 
-	@Override
-	@Transactional
-	public AuthorDetailsDTO grantAuthorAccessToReader(Long id, ReaderChangeRequestDTO dto) {
-		Reader reader = findById(id);
-		AuthorDetailsDTO author = authorService.grantAuthorAccess(reader, dto);
-		readerService.deletePermanently(id);
-		return author;
-	}
+    @Override
+    @Transactional
+    public CollaboratorDetailsDTO grantAuthorAccessToReader(Long id, ReaderChangeRequestDTO dto) {
+        Reader reader = findById(id);
+        CollaboratorDetailsDTO author = collaboratorService.grantAuthorAccess(reader, dto);
+        readerService.deletePermanently(id);
+        return author;
+    }
 
-	private Reader findById(Long readerId) {
-		return readerService.findById(readerId);
-	}
+    private Reader findById(Long readerId) {
+        return readerService.findById(readerId);
+    }
 
 }

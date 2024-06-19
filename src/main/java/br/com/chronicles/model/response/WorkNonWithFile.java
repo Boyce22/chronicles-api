@@ -1,6 +1,5 @@
 package br.com.chronicles.model.response;
 
-import br.com.chronicles.model.entity.Author;
 import br.com.chronicles.model.entity.BookGenre;
 import br.com.chronicles.model.entity.MangaGenre;
 
@@ -31,5 +30,5 @@ public interface WorkNonWithFile {
 
     List<MangaGenre> getMangaGenres();
 
-    String getAuthor();
+    String getCollaborator();
 }

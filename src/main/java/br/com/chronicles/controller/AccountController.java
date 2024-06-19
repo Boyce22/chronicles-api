@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.chronicles.interfaces.AccountServiceImpl;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
-import br.com.chronicles.model.response.AuthorDetailsDTO;
+import br.com.chronicles.model.response.CollaboratorDetailsDTO;
 
 @RestController
 @RequestMapping("/account")
@@ -21,7 +21,7 @@ public class AccountController {
 	}
 
 	@PutMapping("/{id}")
-	public AuthorDetailsDTO grantAuthorAccess(@PathVariable Long id, @RequestBody ReaderChangeRequestDTO dto) {
+	public CollaboratorDetailsDTO grantAuthorAccess(@PathVariable Long id, @RequestBody ReaderChangeRequestDTO dto) {
 		return accountService.grantAuthorAccessToReader(id, dto);
 	}
 

@@ -20,7 +20,7 @@ public class WorkService implements WorkServiceImpl {
 
     private final WorkRepository workRepository;
 
-    private final AuthorServiceImpl authorService;
+    private final CollaboratorServiceImpl collaboratorService;
 
     private final FileServiceImpl fileService;
 
@@ -28,10 +28,10 @@ public class WorkService implements WorkServiceImpl {
 
     private final GenreServiceImpl genreService;
 
-    public WorkService(WorkRepository workRepository, AuthorServiceImpl authorService, FileServiceImpl fileService,
+    public WorkService(WorkRepository workRepository, CollaboratorServiceImpl collaboratorService, FileServiceImpl fileService,
                        List<ValidatorGenresImpl> validatorGenres, GenreServiceImpl genreService) {
         this.workRepository = workRepository;
-        this.authorService = authorService;
+        this.collaboratorService = collaboratorService;
         this.fileService = fileService;
         this.validatorGenres = validatorGenres;
         this.genreService = genreService;
@@ -39,7 +39,7 @@ public class WorkService implements WorkServiceImpl {
 
     @Override
     public WorkDetailsDTO create(WorkCreateDTO dto, MultipartFile pdf) throws IOException {
-        Author author = authorService.findById(dto.authorId());
+        Collaborator collaborator = collaboratorService.findById(dto.collaboratorId());
 
         List<? extends Genre> genres = dto.bookGenres() != null
                 ? getBookGenres(dto.bookGenres())
@@ -50,7 +50,7 @@ public class WorkService implements WorkServiceImpl {
         boolean isMature = validatorGenres.stream()
                 .anyMatch(validator -> validator.validator(dto, genres));
 
-        Work work = workRepository.save(Work.create().register(dto, genres, author, file, isMature));
+        Work work = workRepository.save(Work.create().register(dto, genres, collaborator, file, isMature));
 
         return new WorkDetailsDTO(work);
     }

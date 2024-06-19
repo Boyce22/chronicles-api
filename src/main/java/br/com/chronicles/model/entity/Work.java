@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -72,8 +73,8 @@ public class Work {
     private List<MangaGenre> mangaGenres;
 
     @ManyToOne
-    @JoinColumn(name = "fk_author_cd_id", referencedColumnName = "author_cd_id")
-    private Author author;
+    @JoinColumn(name = "fk_collaborator_cd_id", referencedColumnName = "collaborator_cd_id")
+    private Collaborator collaborator;
 
     @PrePersist
     private void prePersist() {
@@ -87,12 +88,12 @@ public class Work {
         return new Work();
     }
 
-    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Author author, FileWork file, boolean isMature) {
+    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Collaborator collaborator, FileWork file, boolean isMature) {
         this.title = dto.title();
         this.description = dto.description();
         this.bookGenres = areAllBookGenres(genres) ? convertToBookGenreList(genres) : null;
         this.mangaGenres = areAllMangaGenres(genres) ? convertToMangaGenreList(genres) : null;
-        this.author = author;
+        this.collaborator = collaborator;
         this.isMature = isMature;
         this.file = file;
         return this;
@@ -104,10 +105,10 @@ public class Work {
     }
 
     public List<String> getGenres() {
-        return this.bookGenres.isEmpty() ?
-                this.mangaGenres.stream().map(Genre::getName).toList()
-                :
-                this.bookGenres.stream().map(Genre::getName).toList();
+        return (this.bookGenres != null && !this.bookGenres.isEmpty()) ?
+                this.bookGenres.stream().map(Genre::getName).toList() :
+                ((this.mangaGenres != null && !this.mangaGenres.isEmpty()) ?
+                        this.mangaGenres.stream().map(Genre::getName).toList() : Collections.emptyList());
     }
 
     private boolean areAllMangaGenres(List<? extends Genre> genres) {

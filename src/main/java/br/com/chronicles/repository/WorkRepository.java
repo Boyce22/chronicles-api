@@ -19,11 +19,11 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
                        wk.updatedAt as updatedAt,
                        wk.isActive as isActive,
                        wk.isMature as isMature,
-                       wk.author.name as author
+                       wk.collaborator.name as collaborator
                    FROM
                        work wk
                    LEFT JOIN
-                       author au ON wk.author.id = au.id
+                       collaborator col ON wk.collaborator.id = col.id
                    WHERE
                         wk.isActive = true
             """)
