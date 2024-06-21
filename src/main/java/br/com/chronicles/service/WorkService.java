@@ -5,6 +5,7 @@ import br.com.chronicles.model.entity.*;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
 import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkRegisterDetails;
 import br.com.chronicles.repository.WorkRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class WorkService implements WorkServiceImpl {
     }
 
     @Override
-    public WorkDetailsDTO create(WorkCreateDTO dto, MultipartFile pdf) throws IOException {
+    public WorkRegisterDetails create(WorkCreateDTO dto, MultipartFile pdf, MultipartFile cover) throws IOException {
         Collaborator collaborator = collaboratorService.findById(dto.collaboratorId());
 
         List<? extends Genre> genres = dto.bookGenres() != null
@@ -50,9 +51,9 @@ public class WorkService implements WorkServiceImpl {
         boolean isMature = validatorGenres.stream()
                 .anyMatch(validator -> validator.validator(dto, genres));
 
-        Work work = workRepository.save(Work.create().register(dto, genres, collaborator, file, isMature));
+        Work work = workRepository.save(Work.create().register(dto, genres, collaborator, file, isMature, cover.getBytes()));
 
-        return new WorkDetailsDTO(work);
+        return new WorkRegisterDetails(work);
     }
 
     @Override

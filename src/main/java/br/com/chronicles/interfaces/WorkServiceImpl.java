@@ -4,6 +4,7 @@ import br.com.chronicles.model.entity.Work;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
 import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkRegisterDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface WorkServiceImpl {
 
-    WorkDetailsDTO create(WorkCreateDTO dto, MultipartFile pdf) throws IOException;
+    WorkRegisterDetails create(WorkCreateDTO dto, MultipartFile pdf, MultipartFile cover) throws IOException;
 
     Work findById(Long id);
 

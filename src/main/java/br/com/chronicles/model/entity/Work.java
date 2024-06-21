@@ -31,6 +31,9 @@ public class Work {
     @Column(name = "work_tx_description")
     private String description;
 
+    @Column(name = "work_tx_cover")
+    private byte[] cover;
+
     @Column(name = "work_dt_releasedAt")
     private LocalDateTime releasedAt;
 
@@ -88,9 +91,10 @@ public class Work {
         return new Work();
     }
 
-    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Collaborator collaborator, FileWork file, boolean isMature) {
+    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Collaborator collaborator, FileWork file, boolean isMature, byte[] cover) {
         this.title = dto.title();
         this.description = dto.description();
+        this.cover = cover;
         this.bookGenres = areAllBookGenres(genres) ? convertToBookGenreList(genres) : null;
         this.mangaGenres = areAllMangaGenres(genres) ? convertToMangaGenreList(genres) : null;
         this.collaborator = collaborator;
