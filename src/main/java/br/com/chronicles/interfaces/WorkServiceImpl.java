@@ -3,7 +3,7 @@ package br.com.chronicles.interfaces;
 import br.com.chronicles.model.entity.Work;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
-import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkNonWithChapters;
 import br.com.chronicles.model.response.WorkRegisterDetails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,5 +18,5 @@ public interface WorkServiceImpl {
 
     WorkDetailsDTO findWorkDetailsById(Long id);
 
-    List<WorkNonWithFile> findAll();
+    List<WorkNonWithChapters> findAll();
 }

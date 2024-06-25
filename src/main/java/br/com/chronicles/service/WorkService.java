@@ -4,7 +4,7 @@ import br.com.chronicles.interfaces.*;
 import br.com.chronicles.model.entity.*;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
-import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkNonWithChapters;
 import br.com.chronicles.model.response.WorkRegisterDetails;
 import br.com.chronicles.repository.WorkRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -61,7 +61,7 @@ public class WorkService implements WorkServiceImpl {
     }
 
     @Override
-    public List<WorkNonWithFile> findAll() {
+    public List<WorkNonWithChapters> findAll() {
         return workRepository.findAllWithFiles();
     }
 

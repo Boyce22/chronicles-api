@@ -3,7 +3,7 @@ package br.com.chronicles.controller;
 import br.com.chronicles.interfaces.WorkServiceImpl;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
-import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkNonWithChapters;
 import br.com.chronicles.model.response.WorkRegisterDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +36,8 @@ public class WorkController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<WorkNonWithFile>> findAll() {
-        List<WorkNonWithFile> works = workService.findAll();
+    public ResponseEntity<List<WorkNonWithChapters>> findAll() {
+        List<WorkNonWithChapters> works = workService.findAll();
         return works.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(works);
     }
 

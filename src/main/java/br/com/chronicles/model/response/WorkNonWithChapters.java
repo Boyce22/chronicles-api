@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface WorkNonWithFile {
+public interface WorkNonWithChapters {
     Long getId();
 
     String getTitle();

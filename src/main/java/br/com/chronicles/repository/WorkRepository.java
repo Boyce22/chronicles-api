@@ -1,7 +1,7 @@
 package br.com.chronicles.repository;
 
 import br.com.chronicles.model.entity.Work;
-import br.com.chronicles.model.response.WorkNonWithFile;
+import br.com.chronicles.model.response.WorkNonWithChapters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -27,7 +27,7 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
                    WHERE
                         wk.isActive = true
             """)
-    List<WorkNonWithFile> findAllWithFiles();
+    List<WorkNonWithChapters> findAllWithFiles();
 
 
 }
