@@ -29,13 +29,16 @@ public class WorkService implements WorkServiceImpl {
 
     private final GenreServiceImpl genreService;
 
+    private final ChapterServiceImpl chapterService;
+
     public WorkService(WorkRepository workRepository, CollaboratorServiceImpl collaboratorService, FileServiceImpl fileService,
-                       List<ValidatorGenresImpl> validatorGenres, GenreServiceImpl genreService) {
+                       List<ValidatorGenresImpl> validatorGenres, GenreServiceImpl genreService, ChapterServiceImpl chapterService) {
         this.workRepository = workRepository;
         this.collaboratorService = collaboratorService;
         this.fileService = fileService;
         this.validatorGenres = validatorGenres;
         this.genreService = genreService;
+        this.chapterService = chapterService;
     }
 
     @Override
@@ -47,6 +50,7 @@ public class WorkService implements WorkServiceImpl {
                 : getMangaGenres(dto.mangaGenres());
 
         FileWork file = fileService.save(pdf);
+        Chapter chapter = chapterService.save(file, dto.title(), dto.description());
 
         boolean isMature = validatorGenres.stream()
                 .anyMatch(validator -> validator.validator(dto, genres));

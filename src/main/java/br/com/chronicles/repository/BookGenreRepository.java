@@ -1,11 +1,9 @@
 package br.com.chronicles.repository;
 
-import br.com.chronicles.model.entity.MangaGenre;
+import br.com.chronicles.model.entity.BookGenre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import br.com.chronicles.model.entity.BookGenre;
 
 import java.util.List;
 import java.util.UUID;

@@ -36,17 +36,13 @@ public class FileWork {
 	@Column(name = "file_bytes_data")
 	private byte[] data;
 
-	@Column(name = "file_nm_chapters")
-	private Integer numberChapters;
-
 	public static FileWork create() {
 		return new FileWork();
 	}
 
-	public FileWork register(MultipartFile file, Integer numberChapters) throws IOException {
+	public FileWork register(MultipartFile file) throws IOException {
 		this.name = file.getOriginalFilename();
 		this.data = file.getBytes();
-		this.numberChapters = numberChapters;
 		return this;
 	}
 
