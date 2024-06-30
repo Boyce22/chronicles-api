@@ -1,6 +1,6 @@
 package br.com.chronicles.service;
 
-import br.com.chronicles.interfaces.GenreServiceImpl;
+import br.com.chronicles.interfaces.GenreService;
 import br.com.chronicles.model.entity.BookGenre;
 import br.com.chronicles.model.entity.MangaGenre;
 import br.com.chronicles.model.request.GenreRegisterWithListDTO;
@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class GenreService implements GenreServiceImpl {
+public class GenreServiceImpl implements GenreService {
 
     private final MangaGenreRepository mangaGenreRepository;
 
     private final BookGenreRepository bookGenreRepository;
 
-    public GenreService(MangaGenreRepository mangaGenreRepository, BookGenreRepository bookGenreRepository) {
+    public GenreServiceImpl(MangaGenreRepository mangaGenreRepository, BookGenreRepository bookGenreRepository) {
         this.mangaGenreRepository = mangaGenreRepository;
         this.bookGenreRepository = bookGenreRepository;
     }

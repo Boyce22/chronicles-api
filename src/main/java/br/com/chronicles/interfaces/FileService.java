@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.chronicles.model.entity.FileWork;
 
-public interface FileServiceImpl {
+public interface FileService {
 
 	FileWork save(MultipartFile dto) throws IOException;
 

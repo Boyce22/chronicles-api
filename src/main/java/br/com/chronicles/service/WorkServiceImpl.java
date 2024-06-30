@@ -17,22 +17,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class WorkService implements WorkServiceImpl {
+public class WorkServiceImpl implements WorkService {
 
     private final WorkRepository workRepository;
 
-    private final CollaboratorServiceImpl collaboratorService;
+    private final CollaboratorService collaboratorService;
 
-    private final FileServiceImpl fileService;
+    private final FileService fileService;
 
-    private final List<ValidatorGenresImpl> validatorGenres;
+    private final List<ValidatorGenres> validatorGenres;
 
-    private final GenreServiceImpl genreService;
+    private final GenreService genreService;
 
-    private final ChapterServiceImpl chapterService;
+    private final ChapterService chapterService;
 
-    public WorkService(WorkRepository workRepository, CollaboratorServiceImpl collaboratorService, FileServiceImpl fileService,
-                       List<ValidatorGenresImpl> validatorGenres, GenreServiceImpl genreService, ChapterServiceImpl chapterService) {
+    public WorkServiceImpl(WorkRepository workRepository, CollaboratorServiceImpl collaboratorService, FileServiceImpl fileService,
+                           List<ValidatorGenres> validatorGenres, GenreServiceImpl genreService, ChapterServiceImpl chapterService) {
         this.workRepository = workRepository;
         this.collaboratorService = collaboratorService;
         this.fileService = fileService;

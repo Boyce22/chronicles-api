@@ -1,6 +1,6 @@
 package br.com.chronicles.service;
 
-import br.com.chronicles.interfaces.ChapterServiceImpl;
+import br.com.chronicles.interfaces.ChapterService;
 import br.com.chronicles.model.entity.Chapter;
 import br.com.chronicles.model.entity.FileWork;
 import br.com.chronicles.repository.ChapterRepository;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class ChapterService implements ChapterServiceImpl {
+public class ChapterServiceImpl implements ChapterService {
 
     private final ChapterRepository chapterRepository;
 
-    public ChapterService(ChapterRepository chapterRepository) {
+    public ChapterServiceImpl(ChapterRepository chapterRepository) {
         this.chapterRepository = chapterRepository;
     }
 

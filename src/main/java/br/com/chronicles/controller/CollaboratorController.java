@@ -1,6 +1,6 @@
 package br.com.chronicles.controller;
 
-import br.com.chronicles.interfaces.CollaboratorServiceImpl;
+import br.com.chronicles.interfaces.CollaboratorService;
 import br.com.chronicles.model.request.CollaboratorRegisterDTO;
 import br.com.chronicles.model.request.CollaboratorUpdateDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
@@ -15,9 +15,9 @@ import java.util.List;
 @RequestMapping("/collaborator")
 public class CollaboratorController {
 
-    private final CollaboratorServiceImpl collaboratorService;
+    private final CollaboratorService collaboratorService;
 
-    public CollaboratorController(CollaboratorServiceImpl collaboratorService) {
+    public CollaboratorController(CollaboratorService collaboratorService) {
         this.collaboratorService = collaboratorService;
     }
 

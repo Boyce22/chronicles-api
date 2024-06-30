@@ -10,7 +10,7 @@ import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
 import br.com.chronicles.model.response.DefaultResponse;
 
-public interface CollaboratorServiceImpl {
+public interface CollaboratorService {
 
 	CollaboratorDetailsDTO register(CollaboratorRegisterDTO dto);
 

@@ -1,6 +1,6 @@
 package br.com.chronicles.service;
 
-import br.com.chronicles.interfaces.CollaboratorServiceImpl;
+import br.com.chronicles.interfaces.CollaboratorService;
 import br.com.chronicles.model.entity.Collaborator;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.CollaboratorRegisterDTO;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CollaboratorService implements CollaboratorServiceImpl {
+public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
 
-    public CollaboratorService(CollaboratorRepository collaboratorRepository) {
+    public CollaboratorServiceImpl(CollaboratorRepository collaboratorRepository) {
         this.collaboratorRepository = collaboratorRepository;
     }
 

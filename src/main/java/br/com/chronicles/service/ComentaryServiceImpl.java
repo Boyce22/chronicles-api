@@ -1,6 +1,7 @@
 package br.com.chronicles.service;
 
-import br.com.chronicles.interfaces.ComentaryServiceImpl;
+import br.com.chronicles.interfaces.ComentaryService;
+import br.com.chronicles.interfaces.WorkService;
 import br.com.chronicles.model.entity.Comentary;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.entity.Work;
@@ -9,16 +10,16 @@ import br.com.chronicles.repository.ComentaryRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ComentaryService implements ComentaryServiceImpl {
+public class ComentaryServiceImpl implements ComentaryService {
 
     private final ComentaryRepository comentaryRepository;
 
     private final WorkService workService;
 
-    private final ReaderService readerService;
+    private final ReaderServiceImpl readerService;
 
-    public ComentaryService(ComentaryRepository comentaryRepository, WorkService workService,
-                            ReaderService readerService) {
+    public ComentaryServiceImpl(ComentaryRepository comentaryRepository, WorkService workService,
+                                ReaderServiceImpl readerService) {
         this.comentaryRepository = comentaryRepository;
         this.workService = workService;
         this.readerService = readerService;

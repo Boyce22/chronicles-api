@@ -2,11 +2,11 @@ package br.com.chronicles.service;
 
 import java.util.List;
 
+import br.com.chronicles.interfaces.WorkRatingService;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.interfaces.ReaderServiceImpl;
-import br.com.chronicles.interfaces.WorkRatingServiceImpl;
-import br.com.chronicles.interfaces.WorkServiceImpl;
+import br.com.chronicles.interfaces.ReaderService;
+import br.com.chronicles.interfaces.WorkService;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.entity.Work;
 import br.com.chronicles.model.entity.WorkReaderRating;
@@ -16,16 +16,16 @@ import br.com.chronicles.repository.WorkReaderRatingRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class WorkRatingService implements WorkRatingServiceImpl {
+public class WorkRatingServiceImpl implements WorkRatingService {
 
 	private final WorkReaderRatingRepository ratingRepository;
 
-	private final ReaderServiceImpl readerService;
+	private final ReaderService readerService;
 
-	private final WorkServiceImpl workService;
+	private final WorkService workService;
 
-	public WorkRatingService(WorkReaderRatingRepository ratingRepository, ReaderServiceImpl readerService,
-			WorkServiceImpl workService) {
+	public WorkRatingServiceImpl(WorkReaderRatingRepository ratingRepository, ReaderService readerService,
+								 WorkService workService) {
 		this.ratingRepository = ratingRepository;
 		this.readerService = readerService;
 		this.workService = workService;

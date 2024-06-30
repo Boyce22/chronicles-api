@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.chronicles.interfaces.AccountServiceImpl;
+import br.com.chronicles.interfaces.AccountService;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
 
@@ -14,9 +14,9 @@ import br.com.chronicles.model.response.CollaboratorDetailsDTO;
 @RequestMapping("/account")
 public class AccountController {
 
-	private final AccountServiceImpl accountService;
+	private final AccountService accountService;
 
-	public AccountController(AccountServiceImpl accountService) {
+	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 	}
 

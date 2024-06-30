@@ -1,8 +1,8 @@
 package br.com.chronicles.service;
 
-import br.com.chronicles.interfaces.AccountServiceImpl;
-import br.com.chronicles.interfaces.CollaboratorServiceImpl;
-import br.com.chronicles.interfaces.ReaderServiceImpl;
+import br.com.chronicles.interfaces.AccountService;
+import br.com.chronicles.interfaces.CollaboratorService;
+import br.com.chronicles.interfaces.ReaderService;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
@@ -10,13 +10,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountService implements AccountServiceImpl {
+public class AccountServiceImpl implements AccountService {
 
-    private final CollaboratorServiceImpl collaboratorService;
+    private final CollaboratorService collaboratorService;
 
-    private final ReaderServiceImpl readerService;
+    private final ReaderService readerService;
 
-    public AccountService(CollaboratorServiceImpl collaboratorService, ReaderServiceImpl readerService) {
+    public AccountServiceImpl(CollaboratorService collaboratorService, ReaderService readerService) {
         this.collaboratorService = collaboratorService;
         this.readerService = readerService;
     }

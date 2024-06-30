@@ -2,9 +2,9 @@ package br.com.chronicles.service;
 
 import java.util.List;
 
+import br.com.chronicles.interfaces.ReaderService;
 import org.springframework.stereotype.Service;
 
-import br.com.chronicles.interfaces.ReaderServiceImpl;
 import br.com.chronicles.model.entity.Reader;
 import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
@@ -12,11 +12,11 @@ import br.com.chronicles.model.response.ReaderDetailsDTO;
 import br.com.chronicles.repository.ReaderRepository;
 
 @Service
-public class ReaderService implements ReaderServiceImpl {
+public class ReaderServiceImpl implements ReaderService {
 
 	private final ReaderRepository readerRepository;
 
-	public ReaderService(ReaderRepository readerRepository) {
+	public ReaderServiceImpl(ReaderRepository readerRepository) {
 		this.readerRepository = readerRepository;
 	}
 
@@ -37,12 +37,12 @@ public class ReaderService implements ReaderServiceImpl {
 
 	@Override
 	public ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id) {
-		return new ReaderDetailsDTO(readerRepository.save(findById(id).atualizar(dto)));
+		return new ReaderDetailsDTO(readerRepository.save(findById(id).update(dto)));
 	}
 
 	@Override
 	public ReaderDetailsDTO register(ReaderRegisterDTO dto) {
-		return new ReaderDetailsDTO(readerRepository.save(Reader.create().registrar(dto)));
+		return new ReaderDetailsDTO(readerRepository.save(Reader.create().register(dto)));
 	}
 
 	@Override

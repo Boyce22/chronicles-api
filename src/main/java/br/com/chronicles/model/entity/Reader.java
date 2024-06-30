@@ -73,7 +73,7 @@ public class Reader {
 		return new Reader();
 	}
 
-	public Reader registrar(ReaderRegisterDTO dto) {
+	public Reader register(ReaderRegisterDTO dto) {
 		this.name = dto.name();
 		this.lastName = dto.lastName();
 		this.birthDate = dto.birthDate();
@@ -81,7 +81,7 @@ public class Reader {
 		return this;
 	}
 
-	public Reader atualizar(ReaderUpdateDTO dto) {
+	public Reader update(ReaderUpdateDTO dto) {
 		this.name = dto.name();
 		this.lastName = dto.lastName();
 		this.birthDate = dto.birthDate();

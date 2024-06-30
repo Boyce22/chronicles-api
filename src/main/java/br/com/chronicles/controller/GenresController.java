@@ -1,6 +1,6 @@
 package br.com.chronicles.controller;
 
-import br.com.chronicles.interfaces.GenreServiceImpl;
+import br.com.chronicles.interfaces.GenreService;
 import br.com.chronicles.model.request.GenreRegisterWithListDTO;
 import br.com.chronicles.model.response.GenreDetailsDTO;
 import org.springframework.http.HttpStatus;
@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/genres")
 public class GenresController {
 
-    private final GenreServiceImpl genreService;
+    private final GenreService genreService;
 
-    public GenresController(GenreServiceImpl genreService) {
+    public GenresController(GenreService genreService) {
         this.genreService = genreService;
     }
 

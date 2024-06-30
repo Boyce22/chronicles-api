@@ -1,11 +1,11 @@
 package br.com.chronicles.controller;
 
-import br.com.chronicles.interfaces.WorkServiceImpl;
+import br.com.chronicles.interfaces.WorkService;
 import br.com.chronicles.model.request.WorkCreateDTO;
 import br.com.chronicles.model.response.WorkDetailsDTO;
 import br.com.chronicles.model.response.WorkNonWithChapters;
 import br.com.chronicles.model.response.WorkRegisterDetails;
-import org.springframework.http.HttpStatus;
+import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,20 +17,19 @@ import java.util.List;
 @RequestMapping("/work")
 public class WorkController {
 
-    private final WorkServiceImpl workService;
+    private final WorkService workService;
 
     List<String> ALLOWED_CONTENT_TYPES = List.of("application/pdf");
 
-    public WorkController(WorkServiceImpl workService) {
+    public WorkController(WorkService workService) {
         this.workService = workService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<WorkRegisterDetails> create(@RequestPart WorkCreateDTO dto,
                                                       @RequestPart("file") MultipartFile file, @RequestPart("cover") MultipartFile cover) throws IOException {
-        String contentType = file.getContentType();
-        if (!ALLOWED_CONTENT_TYPES.contains(contentType) || contentType == null) {
-            ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body("File type not supported");
+        if (!ALLOWED_CONTENT_TYPES.contains(file.getContentType())) {
+            throw new InvalidContentTypeException("Envie um PDF");
         }
         return ResponseEntity.ok(workService.create(dto, file, cover));
     }

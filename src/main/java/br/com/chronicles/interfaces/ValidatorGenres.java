@@ -5,7 +5,7 @@ import br.com.chronicles.model.request.WorkCreateDTO;
 
 import java.util.List;
 
-public interface ValidatorGenresImpl {
+public interface ValidatorGenres {
 
     boolean validator(WorkCreateDTO dto, List<? extends Genre> genres);
 

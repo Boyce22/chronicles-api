@@ -7,7 +7,7 @@ import br.com.chronicles.model.request.ReaderRegisterDTO;
 import br.com.chronicles.model.request.ReaderUpdateDTO;
 import br.com.chronicles.model.response.ReaderDetailsDTO;
 
-public interface ReaderServiceImpl {
+public interface ReaderService {
 	
 	ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id);
 

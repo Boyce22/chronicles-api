@@ -5,7 +5,7 @@ import br.com.chronicles.model.entity.FileWork;
 
 import java.io.IOException;
 
-public interface ChapterServiceImpl {
+public interface ChapterService {
 
     Chapter save(FileWork fileWork, String title, String description) throws IOException;
 }

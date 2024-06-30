@@ -8,7 +8,7 @@ import br.com.chronicles.model.response.GenreDetailsDTO;
 import java.util.List;
 import java.util.UUID;
 
-public interface GenreServiceImpl {
+public interface GenreService {
 
     List<GenreDetailsDTO> registerMangaGenre(GenreRegisterWithListDTO dto);
 

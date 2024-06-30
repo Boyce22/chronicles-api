@@ -6,7 +6,7 @@ import br.com.chronicles.model.entity.WorkReaderRating;
 import br.com.chronicles.model.request.WorkRatingDTO;
 import br.com.chronicles.model.response.WorkRatingDetailsDTO;
 
-public interface WorkRatingServiceImpl {
+public interface WorkRatingService {
 
 	WorkRatingDetailsDTO verifyIfExistsAndRateWork(WorkRatingDTO dto);
 
