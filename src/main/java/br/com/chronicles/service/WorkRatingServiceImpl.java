@@ -18,9 +18,7 @@ import java.util.List;
 public class WorkRatingServiceImpl implements WorkRatingService {
 
     private final WorkReaderRatingRepository ratingRepository;
-
     private final ReaderService readerService;
-
     private final WorkService workService;
 
     public WorkRatingServiceImpl(WorkReaderRatingRepository ratingRepository, ReaderService readerService,
@@ -45,25 +43,32 @@ public class WorkRatingServiceImpl implements WorkRatingService {
         Reader reader = readerService.findById(dto.readerId());
         Work work = workService.findById(dto.workId());
 
-        return new WorkRatingDetailsDTO(ratingRepository.save(WorkReaderRating
-                .build()
+        WorkReaderRating workReaderRating = WorkReaderRating.builder()
                 .withRating(dto.rating())
                 .withWork(work)
                 .withReader(reader)
-                .build()
-        ));
+                .build();
+
+        return new WorkRatingDetailsDTO(ratingRepository.save(workReaderRating));
     }
 
     private WorkRatingDetailsDTO updateRating(WorkRatingDTO dto, Long id) {
         Reader reader = readerService.findById(dto.readerId());
         Work work = workService.findById(dto.workId());
-        return new WorkRatingDetailsDTO(ratingRepository.save(findById(id).update(dto, reader, work)));
+        WorkReaderRating workReaderRating = findById(id);
+
+        WorkReaderRating workReaderRatingUpdated = WorkReaderRating.update(workReaderRating)
+                .withRating(dto.rating())
+                .withWork(work)
+                .withReader(reader)
+                .build();
+
+        return new WorkRatingDetailsDTO(ratingRepository.save(workReaderRatingUpdated));
     }
 
     @Override
     public WorkReaderRating findById(Long id) {
         return ratingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Rating not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Rating not found with ID: %d".formatted(id)));
     }
-
 }

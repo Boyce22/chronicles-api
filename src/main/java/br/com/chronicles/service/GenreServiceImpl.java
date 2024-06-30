@@ -43,18 +43,18 @@ public class GenreServiceImpl implements GenreService {
             mangaGenreRepository.saveAll(genres);
             return genres.stream().map(GenreDetailsDTO::new).toList();
         }
-        return Collections.singletonList(new GenreDetailsDTO(mangaGenreRepository.save(MangaGenre
+        MangaGenre mangaGenre = MangaGenre
                 .builder()
                 .withDescription(dto.description())
                 .withName(dto.name())
-                .build()))
-        );
+                .build();
+
+        return Collections.singletonList(new GenreDetailsDTO(mangaGenreRepository.save(mangaGenre)));
     }
 
     @Override
     public List<GenreDetailsDTO> registerBookGenre(GenreRegisterWithListDTO dto) {
         if (dto.genres() != null && !dto.genres().isEmpty()) {
-
             List<BookGenre> genres = dto
                     .genres()
                     .stream()
@@ -68,12 +68,13 @@ public class GenreServiceImpl implements GenreService {
             bookGenreRepository.saveAll(genres);
             return genres.stream().map(GenreDetailsDTO::new).toList();
         }
-        return Collections.singletonList(new GenreDetailsDTO(bookGenreRepository.save(BookGenre
+        BookGenre bookGenre = BookGenre
                 .builder()
                 .withDescription(dto.description())
                 .withName(dto.name())
-                .build()))
-        );
+                .build();
+
+        return Collections.singletonList(new GenreDetailsDTO(bookGenreRepository.save(bookGenre)));
     }
 
     @Override

@@ -55,7 +55,7 @@ public class WorkServiceImpl implements WorkService {
         boolean isMature = validatorGenres.stream()
                 .anyMatch(validator -> validator.validator(dto, genres));
 
-        Work work = workRepository.save(Work.builder()
+        Work work = Work.builder()
                 .withTitle(dto.title())
                 .withDescription(dto.description())
                 .withCollaborator(collaborator)
@@ -63,10 +63,9 @@ public class WorkServiceImpl implements WorkService {
                 .withCover(cover.getBytes())
                 .withGenres(genres)
                 .withIsMature(isMature)
-                .build()
-        );
+                .build();
 
-        return new WorkRegisterDetails(work);
+        return new WorkRegisterDetails(workRepository.save(work));
     }
 
     @Override
@@ -77,7 +76,7 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Work findById(Long id) {
         return workRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Work not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Work not found with ID: %d".formatted(id)));
     }
 
     @Override

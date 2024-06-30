@@ -38,25 +38,29 @@ public class ReaderServiceImpl implements ReaderService {
     @Override
     public ReaderDetailsDTO update(ReaderUpdateDTO dto, Long id) {
         Reader reader = findById(id);
-        return new ReaderDetailsDTO(readerRepository.save(Reader
+
+        Reader readerUpdated = Reader
                 .update(reader)
                 .withName(dto.name())
                 .withLastName(dto.lastName())
                 .withEmail(dto.email())
                 .withBirthDate(dto.birthDate())
-                .build()));
+                .build();
+
+        return new ReaderDetailsDTO(readerRepository.save(readerUpdated));
     }
 
     @Override
     public ReaderDetailsDTO register(ReaderRegisterDTO dto) {
-        return new ReaderDetailsDTO(readerRepository.save(Reader
+        Reader reader = Reader
                 .builder()
                 .withName(dto.name())
                 .withLastName(dto.lastName())
                 .withEmail(dto.email())
                 .withBirthDate(dto.birthDate())
-                .build())
-        );
+                .build();
+
+        return new ReaderDetailsDTO(readerRepository.save(reader));
     }
 
     @Override

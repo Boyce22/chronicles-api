@@ -71,14 +71,15 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public CollaboratorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto) {
-        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.builder()
+        Collaborator collaborator = Collaborator.builder()
                 .withName(reader.getName())
                 .withLastName(reader.getLastName())
                 .withBirthDate(reader.getBirthDate())
                 .withCpf(dto.cpf())
                 .withReference(dto.reference())
-                .build())
-        );
+                .build();
+
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(collaborator));
     }
 
     @Override

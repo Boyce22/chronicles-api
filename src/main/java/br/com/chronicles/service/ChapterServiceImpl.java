@@ -20,14 +20,15 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter save(FileWork fileWork, String title, String description) throws IOException {
-        return chapterRepository.save(Chapter
+        Chapter chapter = Chapter
                 .builder()
                 .withTitle(title)
                 .withDescription(description)
                 .withFile(fileWork)
                 .withNumberPages(countNumberPages(fileWork.getData()))
-                .build()
-        );
+                .build();
+
+        return chapterRepository.save(chapter);
     }
 
     private Integer countNumberPages(byte[] file) throws IOException {

@@ -32,15 +32,12 @@ public class WorkReaderRating {
     @Column(name = "work_rating")
     private Double rating;
 
-    public WorkReaderRating update(WorkRatingDTO dto, Reader reader, Work work) {
-        this.rating = dto.rating();
-        this.reader = reader;
-        this.work = work;
-        return this;
+    public static WorkReaderRatingBuilder builder() {
+        return new WorkReaderRatingImpl(new WorkReaderRating());
     }
 
-    public static WorkReaderRatingBuilder build() {
-        return new WorkReaderRatingImpl(new WorkReaderRating());
+    public static WorkReaderRatingBuilder update(WorkReaderRating workReaderRating) {
+        return new WorkReaderRatingImpl(workReaderRating);
     }
 
     private record WorkReaderRatingImpl(WorkReaderRating workReaderRating) implements WorkReaderRatingBuilder {
