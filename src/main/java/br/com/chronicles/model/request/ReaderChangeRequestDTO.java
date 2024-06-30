@@ -1,5 +1,5 @@
 package br.com.chronicles.model.request;
 
-public record ReaderChangeRequestDTO(String cpf) {
+public record ReaderChangeRequestDTO(String cpf, String reference) {
 
 }

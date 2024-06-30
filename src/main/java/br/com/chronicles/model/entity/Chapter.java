@@ -1,5 +1,6 @@
 package br.com.chronicles.model.entity;
 
+import br.com.chronicles.buillders.ChapterBuilder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,16 +32,40 @@ public class Chapter {
     @Column(name = "char_nm_pages")
     private Integer numberPages;
 
-    public static Chapter create() {
-        return new Chapter();
+    public static ChapterBuilder builder() {
+        return new ChapterBuilderImpl(new Chapter());
     }
 
-    public Chapter register(FileWork file, Integer numberPages, String description, String title) {
-        this.file = file;
-        this.description = description;
-        this.title = title;
-        this.numberPages = numberPages;
-        return this;
+    private record ChapterBuilderImpl(Chapter chapter) implements ChapterBuilder {
+
+        @Override
+        public ChapterBuilderImpl withFile(FileWork file) {
+            chapter.file = file;
+            return this;
+        }
+
+        @Override
+        public ChapterBuilderImpl withDescription(String description) {
+            chapter.description = description;
+            return this;
+        }
+
+        @Override
+        public ChapterBuilderImpl withTitle(String title) {
+            chapter.title = title;
+            return this;
+        }
+
+        @Override
+        public ChapterBuilderImpl withNumberPages(Integer numberPages) {
+            chapter.numberPages = numberPages;
+            return this;
+        }
+
+        @Override
+        public Chapter build() {
+            return chapter;
+        }
     }
 
 }

@@ -45,16 +45,4 @@ public abstract class Genre {
     @Column(name = "dt_disable_date")
     protected LocalDateTime disableDate;
 
-    @PrePersist
-    protected void prePersist(){
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDateTime.now();
-        this.isActive = true;
-    }
-
-    protected Genre register(String name, String description) {
-        this.name = name;
-        this.description = description;
-        return this;
-    }
 }

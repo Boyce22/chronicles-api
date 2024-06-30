@@ -1,5 +1,6 @@
 package br.com.chronicles.model.entity;
 
+import br.com.chronicles.buillders.BookGenreBuilder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -13,14 +14,27 @@ import lombok.Setter;
 @Entity(name = "book_genre")
 public class BookGenre extends Genre {
 
-    public static BookGenre create() {
-        return new BookGenre();
+    public static BookGenreBuilder builder() {
+        return new BookGenreBuilderImpl(new BookGenre());
     }
 
-    @Override
-    public BookGenre register(String name, String description) {
-        this.name = name;
-        this.description = description;
-        return this;
+    private record BookGenreBuilderImpl(BookGenre bookGenre) implements BookGenreBuilder {
+
+        @Override
+        public BookGenreBuilderImpl withDescription(String description) {
+            bookGenre.description = description;
+            return this;
+        }
+
+        @Override
+        public BookGenreBuilderImpl withName(String name) {
+            bookGenre.name = name;
+            return this;
+        }
+
+        @Override
+        public BookGenre build() {
+            return bookGenre;
+        }
     }
 }

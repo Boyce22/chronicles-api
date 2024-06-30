@@ -1,11 +1,13 @@
 package br.com.chronicles.model.entity;
 
-import br.com.chronicles.model.request.WorkCreateDTO;
+import br.com.chronicles.buillders.WorkBuilder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,9 +42,11 @@ public class Work {
     @Column(name = "work_nm_rating")
     private Double rating;
 
+    @CreationTimestamp
     @Column(name = "work_dt_createdAt")
     private LocalDate createdAt;
 
+    @UpdateTimestamp
     @Column(name = "work_dt_updatedAt")
     private LocalDateTime updatedAt;
 
@@ -53,7 +57,7 @@ public class Work {
     private Boolean isMature;
 
     @OneToMany(mappedBy = "work")
-    private List<Comentary> comments;
+    private List<Commentary> comments;
 
     @OneToOne
     @JoinColumn(name = "fk_file_cd_id", referencedColumnName = "file_cd_id")
@@ -79,33 +83,97 @@ public class Work {
     @JoinColumn(name = "fk_collaborator_cd_id", referencedColumnName = "collaborator_cd_id")
     private Collaborator collaborator;
 
-    @PrePersist
-    private void prePersist() {
-        this.isActive = true;
-        this.releasedAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-        this.createdAt = LocalDate.now();
+    public static WorkBuilder builder() {
+        return new WorkBuilderImpl(new Work());
     }
 
-    public static Work create() {
-        return new Work();
-    }
+    private record WorkBuilderImpl(Work work) implements WorkBuilder {
 
-    public Work register(WorkCreateDTO dto, List<? extends Genre> genres, Collaborator collaborator, FileWork file, boolean isMature, byte[] cover) {
-        this.title = dto.title();
-        this.description = dto.description();
-        this.cover = cover;
-        this.bookGenres = areAllBookGenres(genres) ? convertToBookGenreList(genres) : null;
-        this.mangaGenres = areAllMangaGenres(genres) ? convertToMangaGenreList(genres) : null;
-        this.collaborator = collaborator;
-        this.isMature = isMature;
-        this.file = file;
-        return this;
-    }
+        @Override
+        public WorkBuilder withTitle(String title) {
+            work.title = title;
+            return this;
+        }
 
-    public Work rating(Double rating) {
-        this.rating = rating + rating;
-        return this;
+        @Override
+        public WorkBuilder withDescription(String description) {
+            work.description = description;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withCover(byte[] cover) {
+            work.cover = cover;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withGenres(List<? extends Genre> genres) {
+            work.bookGenres = areAllBookGenres(genres) ? convertToBookGenreList(genres) : null;
+            work.mangaGenres = areAllMangaGenres(genres) ? convertToMangaGenreList(genres) : null;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withCollaborator(Collaborator collaborator) {
+            work.collaborator = collaborator;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withIsMature(boolean isMature) {
+            work.isMature = isMature;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withFile(FileWork fileWork) {
+            work.file = fileWork;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder withRating(Double rating) {
+            work.rating = rating;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder active() {
+            work.isActive = true;
+            return this;
+        }
+
+        @Override
+        public WorkBuilder disable() {
+            work.isActive = false;
+            return this;
+        }
+
+        @Override
+        public Work build() {
+            return work;
+        }
+
+        private boolean areAllMangaGenres(List<? extends Genre> genres) {
+            return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof MangaGenre);
+        }
+
+        private boolean areAllBookGenres(List<? extends Genre> genres) {
+            return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof BookGenre);
+        }
+
+        private List<MangaGenre> convertToMangaGenreList(List<? extends Genre> genres) {
+            return genres.stream()
+                    .map(genre -> (MangaGenre) genre)
+                    .toList();
+        }
+
+        private List<BookGenre> convertToBookGenreList(List<? extends Genre> genres) {
+            return genres.stream()
+                    .map(genre -> (BookGenre) genre)
+                    .toList();
+        }
     }
 
     public List<String> getGenres() {
@@ -113,26 +181,6 @@ public class Work {
                 this.bookGenres.stream().map(Genre::getName).toList() :
                 ((this.mangaGenres != null && !this.mangaGenres.isEmpty()) ?
                         this.mangaGenres.stream().map(Genre::getName).toList() : Collections.emptyList());
-    }
-
-    private boolean areAllMangaGenres(List<? extends Genre> genres) {
-        return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof MangaGenre);
-    }
-
-    private boolean areAllBookGenres(List<? extends Genre> genres) {
-        return !genres.isEmpty() && genres.stream().anyMatch(genre -> genre instanceof BookGenre);
-    }
-
-    private List<MangaGenre> convertToMangaGenreList(List<? extends Genre> genres) {
-        return genres.stream()
-                .map(genre -> (MangaGenre) genre)
-                .toList();
-    }
-
-    private List<BookGenre> convertToBookGenreList(List<? extends Genre> genres) {
-        return genres.stream()
-                .map(genre -> (BookGenre) genre)
-                .toList();
     }
 
 }

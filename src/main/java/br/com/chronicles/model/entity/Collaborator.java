@@ -1,14 +1,14 @@
 package br.com.chronicles.model.entity;
 
-import br.com.chronicles.model.request.CollaboratorRegisterDTO;
-import br.com.chronicles.model.request.CollaboratorUpdateDTO;
-import br.com.chronicles.model.request.ReaderChangeRequestDTO;
+import br.com.chronicles.buillders.CollaboratorBuilder;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,9 +46,11 @@ public class Collaborator {
     @Column(name = "collaborator_dt_birth_data")
     private LocalDate birthDate;
 
+    @CreationTimestamp
     @Column(name = "collaborator_dt_createAt")
     private LocalDate createdAt;
 
+    @UpdateTimestamp
     @Column(name = "collaborator_dt_updateAt")
     private LocalDateTime updatedAt;
 
@@ -61,55 +63,70 @@ public class Collaborator {
     @OneToMany(mappedBy = "collaborator")
     private List<Work> work;
 
-    @PrePersist
-    void prePersist() {
-        this.isActive = true;
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDateTime.now();
+    public static CollaboratorBuilder builder() {
+        return new CollaboratorBuilderImpl(new Collaborator());
     }
 
-    public static Collaborator create() {
-        return new Collaborator();
+
+    public static CollaboratorBuilder update(Collaborator collaborator) {
+        return new CollaboratorBuilderImpl(collaborator);
     }
 
-    public Collaborator registrar(CollaboratorRegisterDTO dto) {
-        this.name = dto.name();
-        this.lastName = dto.lastName();
-        this.reference = dto.reference();
-        this.cpf = dto.cpf();
-        this.birthDate = dto.birthDate();
-        return this;
-    }
+    private record CollaboratorBuilderImpl(Collaborator collaborator) implements CollaboratorBuilder {
 
-    public Collaborator update(CollaboratorUpdateDTO dto) {
-        this.name = dto.name();
-        this.lastName = dto.lastName();
-        this.cpf = dto.cpf();
-        this.birthDate = dto.birthDate();
-        this.updatedAt = LocalDateTime.now();
-        return this;
-    }
+        @Override
+        public CollaboratorBuilder withName(String name) {
+            collaborator.name = name;
+            return this;
+        }
 
-    public Collaborator disable() {
-        this.isActive = false;
-        this.disableDate = LocalDateTime.now();
-        return this;
-    }
+        @Override
+        public CollaboratorBuilder withLastName(String lastName) {
+            collaborator.lastName = lastName;
+            return this;
+        }
 
-    public Collaborator active() {
-        this.isActive = true;
-        this.updatedAt = LocalDateTime.now();
-        this.disableDate = null;
-        return this;
-    }
+        @Override
+        public CollaboratorBuilder withReference(String reference) {
+            collaborator.reference = reference;
+            return this;
+        }
 
-    public Collaborator grantAuthorAccessToReader(Reader reader, ReaderChangeRequestDTO dto) {
-        this.name = reader.getName();
-        this.lastName = reader.getLastName();
-        this.birthDate = reader.getBirthDate();
-        this.createdAt = reader.getCreatedAt();
-        this.cpf = dto.cpf();
-        return this;
-    }
+        @Override
+        public CollaboratorBuilder withCpf(String cpf) {
+            collaborator.cpf = cpf;
+            return this;
+        }
 
+        @Override
+        public CollaboratorBuilder withEmail(String email) {
+            collaborator.email = email;
+            return this;
+        }
+
+        @Override
+        public CollaboratorBuilder withBirthDate(LocalDate birthDate) {
+            collaborator.birthDate = birthDate;
+            return this;
+        }
+
+        @Override
+        public CollaboratorBuilder disable() {
+            collaborator.isActive = false;
+            collaborator.disableDate = LocalDateTime.now();
+            return this;
+        }
+
+        @Override
+        public CollaboratorBuilder active() {
+            collaborator.isActive = true;
+            collaborator.disableDate = null;
+            return this;
+        }
+
+        @Override
+        public Collaborator build() {
+            return collaborator;
+        }
+    }
 }

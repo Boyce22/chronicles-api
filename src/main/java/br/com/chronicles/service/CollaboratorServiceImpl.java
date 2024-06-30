@@ -7,7 +7,6 @@ import br.com.chronicles.model.request.CollaboratorRegisterDTO;
 import br.com.chronicles.model.request.CollaboratorUpdateDTO;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
-import br.com.chronicles.model.response.DefaultResponse;
 import br.com.chronicles.repository.CollaboratorRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +23,28 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public CollaboratorDetailsDTO register(CollaboratorRegisterDTO dto) {
-        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.create().registrar(dto)));
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator
+                .builder()
+                .withName(dto.name())
+                .withLastName(dto.lastName())
+                .withCpf(dto.cpf())
+                .withBirthDate(dto.birthDate())
+                .build())
+        );
     }
 
     @Override
     public CollaboratorDetailsDTO update(CollaboratorUpdateDTO dto, Long id) {
-        return new CollaboratorDetailsDTO(collaboratorRepository.save(findById(id).update(dto)));
+        Collaborator collaborator = findById(id);
+
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator
+                .update(collaborator)
+                .withName(dto.name())
+                .withLastName(dto.lastName())
+                .withCpf(dto.cpf())
+                .withBirthDate(dto.birthDate())
+                .build())
+        );
     }
 
     @Override
@@ -43,28 +58,27 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
-    public DefaultResponse disable(Long id) {
+    public CollaboratorDetailsDTO disable(Long id) {
         Collaborator collaborator = findById(id);
-        if (collaborator.getIsActive()) {
-            collaboratorRepository.save(collaborator.disable());
-            return new DefaultResponse("User disabled successfully");
-        }
-        return new DefaultResponse("Error");
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.update(collaborator).disable().build()));
     }
 
     @Override
-    public DefaultResponse active(Long id) {
+    public CollaboratorDetailsDTO active(Long id) {
         Collaborator collaborator = findById(id);
-        if (!collaborator.getIsActive()) {
-            collaboratorRepository.save(collaborator.active());
-            return new DefaultResponse("User activated successfully");
-        }
-        return new DefaultResponse("Error");
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.update(collaborator).active().build()));
     }
 
     @Override
     public CollaboratorDetailsDTO grantAuthorAccess(Reader reader, ReaderChangeRequestDTO dto) {
-        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.create().grantAuthorAccessToReader(reader, dto)));
+        return new CollaboratorDetailsDTO(collaboratorRepository.save(Collaborator.builder()
+                .withName(reader.getName())
+                .withLastName(reader.getLastName())
+                .withBirthDate(reader.getBirthDate())
+                .withCpf(dto.cpf())
+                .withReference(dto.reference())
+                .build())
+        );
     }
 
     @Override

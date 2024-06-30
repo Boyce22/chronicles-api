@@ -4,7 +4,6 @@ import br.com.chronicles.interfaces.CollaboratorService;
 import br.com.chronicles.model.request.CollaboratorRegisterDTO;
 import br.com.chronicles.model.request.CollaboratorUpdateDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
-import br.com.chronicles.model.response.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,12 +42,12 @@ public class CollaboratorController {
     }
 
     @PutMapping("/active/{id}")
-    public ResponseEntity<DefaultResponse> activeCollaborator(@PathVariable Long id) {
+    public ResponseEntity<CollaboratorDetailsDTO> activeCollaborator(@PathVariable Long id) {
         return ResponseEntity.ok(collaboratorService.active(id));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<DefaultResponse> deleteCollaborator(@PathVariable Long id) {
+    public ResponseEntity<CollaboratorDetailsDTO> deleteCollaborator(@PathVariable Long id) {
         return ResponseEntity.ok(collaboratorService.disable(id));
     }
 

@@ -1,23 +1,17 @@
 package br.com.chronicles.model.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import br.com.chronicles.model.request.ReaderRegisterDTO;
-import br.com.chronicles.model.request.ReaderUpdateDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import br.com.chronicles.buillders.ReaderBuilder;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,78 +21,95 @@ import lombok.Setter;
 @Table(name = "reader")
 public class Reader {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reader_cd_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reader_cd_id")
+    private Long id;
 
-	@Column(name = "reader_tx_name")
-	private String name;
+    @Column(name = "reader_tx_name")
+    private String name;
 
-	@Column(name = "reader_tx_lastName")
-	private String lastName;
+    @Column(name = "reader_tx_lastName")
+    private String lastName;
 
-	@Column(name = "reader_tx_email")
-	private String email;
+    @Column(name = "reader_tx_email")
+    private String email;
 
-	@Column(name = "reader_dt_birth_date")
-	private LocalDate birthDate;
+    @Column(name = "reader_dt_birth_date")
+    private LocalDate birthDate;
 
-	@Column(name = "reader_dt_createAt")
-	private LocalDate createdAt;
+    @CreationTimestamp
+    @Column(name = "reader_dt_createAt")
+    private LocalDate createdAt;
 
-	@Column(name = "reader_dt_updateAt")
-	private LocalDateTime updatedAt;
+    @UpdateTimestamp
+    @Column(name = "reader_dt_updateAt")
+    private LocalDateTime updatedAt;
 
-	@Column(name = "reader_dt_disabledAt")
-	private LocalDateTime disabledAt;
+    @Column(name = "reader_dt_disabledAt")
+    private LocalDateTime disabledAt;
 
-	@Column(name = "reader_dt_deletedAt")
-	private LocalDateTime deletedAt;
+    @Column(name = "reader_dt_deletedAt")
+    private LocalDateTime deletedAt;
 
-	@Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
-	private Boolean isActive;
+    @Column(name = "reader_bl_is_active", columnDefinition = "boolean default true")
+    private Boolean isActive;
 
-	@OneToMany(mappedBy = "reader")
-	private List<Comentary> comments;
+    @OneToMany(mappedBy = "reader")
+    private List<Commentary> comments;
 
-	@PrePersist
-	void prePersist() {
-		this.isActive = true;
-		this.createdAt = LocalDate.now();
-		this.updatedAt = LocalDateTime.now();
-	}
+    public static ReaderBuilder builder() {
+        return new ReaderBuilderImpl(new Reader());
+    }
 
-	public static Reader create() {
-		return new Reader();
-	}
+    public static ReaderBuilder update(Reader reader) {
+        return new ReaderBuilderImpl(reader);
+    }
 
-	public Reader register(ReaderRegisterDTO dto) {
-		this.name = dto.name();
-		this.lastName = dto.lastName();
-		this.birthDate = dto.birthDate();
-		this.createdAt = LocalDate.now();
-		return this;
-	}
+    private record ReaderBuilderImpl(Reader reader) implements ReaderBuilder {
 
-	public Reader update(ReaderUpdateDTO dto) {
-		this.name = dto.name();
-		this.lastName = dto.lastName();
-		this.birthDate = dto.birthDate();
-		return this;
-	}
+        @Override
+        public ReaderBuilder withName(String name) {
+            reader.name = name;
+            return this;
+        }
 
-	public Reader disable() {
-		this.disabledAt = LocalDateTime.now();
-		this.isActive = false;
-		return this;
-	}
+        @Override
+        public ReaderBuilder withLastName(String lastName) {
+            reader.lastName = lastName;
+            return this;
+        }
 
-	public Reader active() {
-		this.isActive = true;
-		this.updatedAt = LocalDateTime.now();
-		this.disabledAt = null;
-		return this;
-	}
+        @Override
+        public ReaderBuilder withEmail(String email) {
+            reader.email = email;
+            return this;
+        }
+
+        @Override
+        public ReaderBuilder withBirthDate(LocalDate birthDate) {
+            reader.birthDate = birthDate;
+            return this;
+        }
+
+        @Override
+        public ReaderBuilder active() {
+            reader.isActive = true;
+            reader.disabledAt = null;
+            return this;
+        }
+
+        @Override
+        public ReaderBuilder disable() {
+            reader.isActive = false;
+            reader.disabledAt = LocalDateTime.now();
+            return this;
+        }
+
+        @Override
+        public Reader build() {
+            return reader;
+        }
+    }
 
 }

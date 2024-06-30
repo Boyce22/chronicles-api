@@ -33,13 +33,22 @@ public class GenreServiceImpl implements GenreService {
             List<MangaGenre> genres = dto
                     .genres()
                     .stream()
-                    .map(gen -> MangaGenre.create().register(gen.name(), gen.description()))
+                    .map(gen -> MangaGenre
+                            .builder()
+                            .withDescription(gen.description())
+                            .withName(gen.name())
+                            .build())
                     .toList();
 
             mangaGenreRepository.saveAll(genres);
             return genres.stream().map(GenreDetailsDTO::new).toList();
         }
-        return Collections.singletonList(new GenreDetailsDTO(mangaGenreRepository.save(MangaGenre.create().register(dto.name(), dto.description()))));
+        return Collections.singletonList(new GenreDetailsDTO(mangaGenreRepository.save(MangaGenre
+                .builder()
+                .withDescription(dto.description())
+                .withName(dto.name())
+                .build()))
+        );
     }
 
     @Override
@@ -49,13 +58,22 @@ public class GenreServiceImpl implements GenreService {
             List<BookGenre> genres = dto
                     .genres()
                     .stream()
-                    .map(gen -> BookGenre.create().register(gen.name(), gen.description()))
+                    .map(gen -> BookGenre
+                            .builder()
+                            .withDescription(gen.description())
+                            .withName(gen.name())
+                            .build())
                     .toList();
 
             bookGenreRepository.saveAll(genres);
             return genres.stream().map(GenreDetailsDTO::new).toList();
         }
-        return Collections.singletonList(new GenreDetailsDTO(bookGenreRepository.save(BookGenre.create().register(dto.name(), dto.description()))));
+        return Collections.singletonList(new GenreDetailsDTO(bookGenreRepository.save(BookGenre
+                .builder()
+                .withDescription(dto.description())
+                .withName(dto.name())
+                .build()))
+        );
     }
 
     @Override
@@ -97,12 +115,12 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public BookGenre findGenreBookById(UUID id) {
         return bookGenreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Gênero não encotrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Gênero não encontrado"));
     }
 
     @Override
     public MangaGenre findGenreMangaById(UUID id) {
         return mangaGenreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Gênero não encotrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Gênero não encontrado"));
     }
 }

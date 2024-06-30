@@ -8,7 +8,6 @@ import br.com.chronicles.model.request.CollaboratorRegisterDTO;
 import br.com.chronicles.model.request.CollaboratorUpdateDTO;
 import br.com.chronicles.model.request.ReaderChangeRequestDTO;
 import br.com.chronicles.model.response.CollaboratorDetailsDTO;
-import br.com.chronicles.model.response.DefaultResponse;
 
 public interface CollaboratorService {
 
@@ -18,9 +17,9 @@ public interface CollaboratorService {
 
 	List<CollaboratorDetailsDTO> findAll();
 
-	DefaultResponse disable(Long id);
+	CollaboratorDetailsDTO disable(Long id);
 
-	DefaultResponse active(Long id);
+	CollaboratorDetailsDTO active(Long id);
 
 	Collaborator findById(Long id);
 

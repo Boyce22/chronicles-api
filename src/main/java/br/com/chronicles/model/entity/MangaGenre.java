@@ -1,5 +1,6 @@
 package br.com.chronicles.model.entity;
 
+import br.com.chronicles.buillders.MangaGenreBuilder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -13,14 +14,27 @@ import lombok.Setter;
 @Entity(name = "manga_genre")
 public class MangaGenre extends Genre {
 
-    public static MangaGenre create() {
-        return new MangaGenre();
+    public static MangaGenreBuilder builder() {
+        return new MangaGenreBuilderImpl(new MangaGenre());
     }
 
-    @Override
-    public MangaGenre register(String name, String description) {
-        this.name = name;
-        this.description = description;
-        return this;
+    private record MangaGenreBuilderImpl(MangaGenre mangaGenre) implements MangaGenreBuilder {
+
+        @Override
+        public MangaGenreBuilderImpl withName(String name) {
+            mangaGenre.name = name;
+            return this;
+        }
+
+        @Override
+        public MangaGenreBuilderImpl withDescription(String description) {
+            mangaGenre.description = description;
+            return this;
+        }
+
+        @Override
+        public MangaGenre build() {
+            return mangaGenre;
+        }
     }
 }

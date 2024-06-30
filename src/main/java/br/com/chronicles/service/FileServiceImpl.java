@@ -20,7 +20,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileWork save(MultipartFile file) throws IOException {
-        return fileRepository.save(FileWork.create().register(file));
+        return fileRepository.save(FileWork
+                .builder()
+                .withData(file.getBytes())
+                .withName(file.getOriginalFilename())
+                .build()
+        );
     }
 
     private FileWork findById(Long id) {
