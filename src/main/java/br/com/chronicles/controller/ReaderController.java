@@ -2,7 +2,7 @@ package br.com.chronicles.controller;
 
 import java.util.List;
 
-import br.com.chronicles.interfaces.ReaderServiceImpl;
+import br.com.chronicles.interfaces.ReaderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +22,9 @@ import jakarta.validation.Valid;
 @RequestMapping("/reader")
 public class ReaderController {
 	
-	private final ReaderServiceImpl readerService;
+	private final ReaderService readerService;
 	
-	public ReaderController(ReaderServiceImpl readerService) {
+	public ReaderController(ReaderService readerService) {
 		this.readerService = readerService;
 	}
 	

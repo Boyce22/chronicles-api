@@ -1,5 +1,7 @@
 package br.com.chronicles.model.request;
 
-public record WorkCreateDTO(Long authorId, String title, 
-		String[] genre, String description) {
+import java.util.UUID;
+
+public record WorkCreateDTO(Long collaboratorId, String title,
+                            UUID[] bookGenres, UUID[] mangaGenres, String description) {
 }
