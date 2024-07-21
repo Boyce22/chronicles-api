@@ -45,12 +45,12 @@ public class GenresController {
 
     @PostMapping("book/register")
     public ResponseEntity<List<GenreDetailsDTO>> registerBookGenres(@RequestBody GenreRegisterWithListDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerBookGenre(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerBookGenres(dto));
     }
 
     @PostMapping("manga/register")
     public ResponseEntity<List<GenreDetailsDTO>> registerMangaGenres(@RequestBody GenreRegisterWithListDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerMangaGenre(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.registerMangaGenres(dto));
     }
 
 }

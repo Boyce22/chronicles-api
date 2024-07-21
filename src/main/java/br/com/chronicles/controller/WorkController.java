@@ -19,8 +19,6 @@ public class WorkController {
 
     private final WorkService workService;
 
-    List<String> ALLOWED_CONTENT_TYPES = List.of("application/pdf");
-
     public WorkController(WorkService workService) {
         this.workService = workService;
     }
@@ -28,9 +26,6 @@ public class WorkController {
     @PostMapping("/create")
     public ResponseEntity<WorkRegisterDetails> create(@RequestPart WorkCreateDTO dto,
                                                       @RequestPart("file") MultipartFile file, @RequestPart("cover") MultipartFile cover) throws IOException {
-        if (!ALLOWED_CONTENT_TYPES.contains(file.getContentType())) {
-            throw new InvalidContentTypeException("Envie um PDF");
-        }
         return ResponseEntity.ok(workService.create(dto, file, cover));
     }
 

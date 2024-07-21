@@ -10,7 +10,6 @@ import br.com.chronicles.repository.MangaGenreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,54 +26,33 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<GenreDetailsDTO> registerMangaGenre(GenreRegisterWithListDTO dto) {
-        if (dto.genres() != null && !dto.genres().isEmpty()) {
+    public List<GenreDetailsDTO> registerMangaGenres(GenreRegisterWithListDTO dto) {
+        List<MangaGenre> genres = dto
+                .genres()
+                .stream()
+                .map(gen -> MangaGenre
+                        .builder()
+                        .withDescription(gen.description())
+                        .withName(gen.name())
+                        .build())
+                .toList();
 
-            List<MangaGenre> genres = dto
-                    .genres()
-                    .stream()
-                    .map(gen -> MangaGenre
-                            .builder()
-                            .withDescription(gen.description())
-                            .withName(gen.name())
-                            .build())
-                    .toList();
-
-            mangaGenreRepository.saveAll(genres);
-            return genres.stream().map(GenreDetailsDTO::new).toList();
-        }
-        MangaGenre mangaGenre = MangaGenre
-                .builder()
-                .withDescription(dto.description())
-                .withName(dto.name())
-                .build();
-
-        return Collections.singletonList(new GenreDetailsDTO(mangaGenreRepository.save(mangaGenre)));
+        return mangaGenreRepository.saveAll(genres).stream().map(GenreDetailsDTO::new).toList();
     }
 
     @Override
-    public List<GenreDetailsDTO> registerBookGenre(GenreRegisterWithListDTO dto) {
-        if (dto.genres() != null && !dto.genres().isEmpty()) {
-            List<BookGenre> genres = dto
-                    .genres()
-                    .stream()
-                    .map(gen -> BookGenre
-                            .builder()
-                            .withDescription(gen.description())
-                            .withName(gen.name())
-                            .build())
-                    .toList();
+    public List<GenreDetailsDTO> registerBookGenres(GenreRegisterWithListDTO dto) {
+        List<BookGenre> genres = dto
+                .genres()
+                .stream()
+                .map(gen -> BookGenre
+                        .builder()
+                        .withDescription(gen.description())
+                        .withName(gen.name())
+                        .build())
+                .toList();
 
-            bookGenreRepository.saveAll(genres);
-            return genres.stream().map(GenreDetailsDTO::new).toList();
-        }
-        BookGenre bookGenre = BookGenre
-                .builder()
-                .withDescription(dto.description())
-                .withName(dto.name())
-                .build();
-
-        return Collections.singletonList(new GenreDetailsDTO(bookGenreRepository.save(bookGenre)));
+        return bookGenreRepository.saveAll(genres).stream().map(GenreDetailsDTO::new).toList();
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class BookContentValidatorImpl implements ValidatorGenres {
 
     @Override
-    public boolean validator(WorkCreateDTO dto, List<? extends Genre> genres) {
+    public boolean validate(WorkCreateDTO dto, List<? extends Genre> genres) {
         return dto.bookGenres() != null && genres.stream().anyMatch(Genre::isMature);
     }
 
