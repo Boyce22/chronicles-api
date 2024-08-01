@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ValidatorGenres {
 
-    boolean validator(WorkCreateDTO dto, List<? extends Genre> genres);
+    boolean validate(WorkCreateDTO dto, List<? extends Genre> genres);
 
 }

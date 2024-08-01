@@ -45,28 +45,16 @@ public class WorkServiceImpl implements WorkService {
     public WorkRegisterDetails create(WorkCreateDTO dto, MultipartFile pdf, MultipartFile cover) throws IOException {
         Collaborator collaborator = collaboratorService.findById(dto.collaboratorId());
 
-        List<? extends Genre> genres = dto.bookGenres() != null
-                ? getBookGenres(dto.bookGenres())
-                : getMangaGenres(dto.mangaGenres());
+        List<? extends Genre> genres = getGenres(dto);
 
         FileWork file = fileService.save(pdf);
         Chapter chapter = chapterService.save(file, dto.title(), dto.description());
 
-        boolean isMature = validatorGenres.stream()
-                .anyMatch(validator -> validator.validator(dto, genres));
+        boolean isMature = validateMaturity(dto, genres);
 
-        Work work = workRepository.save(Work.builder()
-                .withTitle(dto.title())
-                .withDescription(dto.description())
-                .withCollaborator(collaborator)
-                .withFile(file)
-                .withCover(cover.getBytes())
-                .withGenres(genres)
-                .withIsMature(isMature)
-                .build()
-        );
+        Work work = buildWork(dto, collaborator, file, cover.getBytes(), genres, isMature);
 
-        return new WorkRegisterDetails(work);
+        return new WorkRegisterDetails(workRepository.save(work));
     }
 
     @Override
@@ -77,12 +65,34 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Work findById(Long id) {
         return workRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Work not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Work not found with ID: %d".formatted(id)));
     }
 
     @Override
     public WorkDetailsDTO findWorkDetailsById(Long id) {
         return new WorkDetailsDTO(findById(id));
+    }
+
+    private List<? extends Genre> getGenres(WorkCreateDTO dto) {
+        return dto.mangaGenres() != null ? getMangaGenres(dto.mangaGenres()) : getBookGenres(dto.bookGenres());
+    }
+
+    private boolean validateMaturity(WorkCreateDTO dto, List<? extends Genre> genres) {
+        return validatorGenres.stream()
+                .anyMatch(validator -> validator.validate(dto, genres));
+    }
+
+    private Work buildWork(WorkCreateDTO dto, Collaborator collaborator, FileWork file, byte[] coverBytes,
+                           List<? extends Genre> genres, boolean isMature) {
+        return Work.builder()
+                .withTitle(dto.title())
+                .withDescription(dto.description())
+                .withCollaborator(collaborator)
+                .withFile(file)
+                .withCover(coverBytes)
+                .withGenres(genres)
+                .withIsMature(isMature)
+                .build();
     }
 
     private List<MangaGenre> getMangaGenres(UUID[] ids) {

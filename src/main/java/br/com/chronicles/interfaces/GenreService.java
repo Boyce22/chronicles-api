@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface GenreService {
 
-    List<GenreDetailsDTO> registerMangaGenre(GenreRegisterWithListDTO dto);
+    List<GenreDetailsDTO> registerMangaGenres(GenreRegisterWithListDTO dto);
 
-    List<GenreDetailsDTO> registerBookGenre(GenreRegisterWithListDTO dto);
+    List<GenreDetailsDTO> registerBookGenres(GenreRegisterWithListDTO dto);
 
     List<GenreDetailsDTO> getMangaGenres();
 

@@ -30,12 +30,13 @@ public class CommentaryServiceImpl implements CommentaryService {
         Work work = workService.findById(workId);
         Reader reader = readerService.findById(readerId);
 
-        return new CommentaryDetailsDTO(commentaryRepository.save(Commentary
+        Commentary commentary = Commentary
                 .builder()
                 .withContent(content)
                 .withReader(reader)
                 .withWork(work)
-                .build()
-        ));
+                .build();
+
+        return new CommentaryDetailsDTO(commentaryRepository.save(commentary));
     }
 }

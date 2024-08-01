@@ -20,17 +20,18 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileWork save(MultipartFile file) throws IOException {
-        return fileRepository.save(FileWork
+        FileWork fileWork = FileWork
                 .builder()
                 .withData(file.getBytes())
                 .withName(file.getOriginalFilename())
-                .build()
-        );
+                .build();
+
+        return fileRepository.save(fileWork);
     }
 
     private FileWork findById(Long id) {
         return fileRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Arquivo não encontrado com o ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Arquivo não encontrado com o ID: %d".formatted(id)));
     }
 
 }
