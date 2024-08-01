@@ -33,10 +33,6 @@
 7. **Recomendações Personalizadas:**
   - Com base nas preferências de leitura e histórico de interações dos usuários, o sistema pode oferecer recomendações personalizadas de obras que possam interessar a cada usuário.
   - As recomendações ajudam os leitores a descobrir novos autores e gêneros que estejam alinhados com seus gostos e interesses.
-   
-9. **Notificações:**
- - Os usuários podem optar por receber notificações sobre novos lançamentos, atualizações de obras favoritas, novos comentários ou avaliações em suas obras, entre outros eventos relevantes.
- - As notificações mantêm os usuários engajados e informados sobre as atividades e novidades na plataforma.
 
 ## Tecnologias
 
