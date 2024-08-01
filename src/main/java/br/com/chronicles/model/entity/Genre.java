@@ -36,13 +36,13 @@ public abstract class Genre {
     @Column(name = "genre_bl_is_mature")
     protected boolean isMature;
 
-    @Column(name = "dt_createAt")
+    @Column(name = "dt_createdAt")
     protected LocalDate createdAt;
 
-    @Column(name = "dt_updateAt")
+    @Column(name = "dt_updatedAt")
     protected LocalDateTime updatedAt;
 
-    @Column(name = "dt_disable_date")
+    @Column(name = "dt_disabled_date")
     protected LocalDateTime disableDate;
 
 }
