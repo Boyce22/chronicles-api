@@ -30,10 +30,6 @@
   - Os usuários podem deixar comentários sobre obras específicas, facilitando discussões e interações entre os leitores e os autores.
   - Os comentários são uma forma de compartilhar opiniões, críticas construtivas e insights sobre as obras.
 
-7. **Recomendações Personalizadas:**
-  - Com base nas preferências de leitura e histórico de interações dos usuários, o sistema pode oferecer recomendações personalizadas de obras que possam interessar a cada usuário.
-  - As recomendações ajudam os leitores a descobrir novos autores e gêneros que estejam alinhados com seus gostos e interesses.
-
 ## Tecnologias
 
 - [Java 21](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html) - A versão mais recente da linguagem de programação Java, proporcionando recursos avançados e melhorias de desempenho.
