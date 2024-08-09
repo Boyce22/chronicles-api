@@ -22,11 +22,7 @@
 4. **Busca por Autor:**
   - Os autores podem ser encontrados através de sua referência, como @Autor.
   
-5. **Sistema de Avaliação de Obras:**
-  - Os leitores podem atribuir avaliações às obras, fornecendo feedback valioso para outros usuários.
-  - As avaliações ajudam a destacar obras de qualidade e guiar os leitores na escolha de seus próximos livros.
-  
-6. **Sistema de Comentários:**
+5. **Sistema de Comentários:**
   - Os usuários podem deixar comentários sobre obras específicas, facilitando discussões e interações entre os leitores e os autores.
   - Os comentários são uma forma de compartilhar opiniões, críticas construtivas e insights sobre as obras.
 
