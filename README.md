@@ -1,80 +1,102 @@
-# Chronicles - API 📚
+# Chronicles - API 📚  
 
-### Sua porta de entrada para os mundos criativos dos pequenos autores, conectando suas histórias ao universo digital com simplicidade e eficiência..
+### Conectando pequenos autores e seus mundos criativos ao universo digital com simplicidade e eficiência.  
 
-## Funcionalidades
+---
 
-1. **Cadastro de Autor:**
-  - Os autores podem enviar seus trabalhos autorais, no formato de PDF, que serão associados a eles.
-  Cadastro de Leitor:
-  - Os leitores terão acesso aos trabalhos disponíveis na aplicação.
-  - É possível alterar o cadastro de leitor para autor, se necessário, mediante informação do CPF.
-  
-2. **Serviço para upload de arquivos PDF:**
-  - Autores podem enviar seus PDFs, atualmente com suporte para até 128MB.
-  - As páginas de conteúdo serão contabilizadas, atualmente sem limite definido.
+## ⚙️ Funcionalidades  
 
-3. **Cadastro da Obra:**
-  - Existe uma padronização nas categorias que podem estar associadas à obra, como Romance, Ação e Aventura.
-  - Não há limites definidos para o número de categorias.
-  - Obras com conteúdo para público maduro receberão uma tag, permitindo acesso somente a maiores de 18 anos.
+### 📄 **Cadastro de Autor**  
+- Os autores podem se cadastrar e enviar seus **trabalhos autorais** no formato **PDF**, que serão vinculados ao seu perfil.  
 
-4. **Busca por Autor:**
-  - Os autores podem ser encontrados através de sua referência, como @Autor.
-  
-5. **Sistema de Comentários:**
-  - Os usuários podem deixar comentários sobre obras específicas, facilitando discussões e interações entre os leitores e os autores.
-  - Os comentários são uma forma de compartilhar opiniões, críticas construtivas e insights sobre as obras.
+### 📖 **Cadastro de Leitor**  
+- Leitores podem se cadastrar para acessar obras disponíveis na aplicação.  
+- É possível alterar o **cadastro de leitor para autor**, mediante o envio de informações adicionais como **CPF**.  
 
-## Tecnologias
+### 📂 **Serviço para Upload de Arquivos PDF**  
+- Autores podem enviar **arquivos PDF** com limite de até **128MB**.  
+- As **páginas de conteúdo** enviadas serão contabilizadas, porém não há limite definido no momento.  
 
-- [Java 21](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html) - A versão mais recente da linguagem de programação Java, proporcionando recursos avançados e melhorias de desempenho.
+### 📚 **Cadastro de Obras**  
+- As obras devem ser cadastradas em **categorias padronizadas**, como Romance, Ação, Aventura, entre outras.  
+- Obras direcionadas ao **público maduro** receberão uma **tag especial**, restringindo o acesso apenas para maiores de 18 anos.  
 
-- [Spring Framework](https://spring.io/) - Um framework de desenvolvimento para Java que oferece suporte abrangente para o desenvolvimento de aplicativos empresariais modernos.
+### 🧐 **Busca por Autor**  
+- Encontre autores cadastrados facilmente por meio de uma referência, como **@Autor**.  
 
-- [PostgreSQL](https://www.postgresql.org/) - Um sistema de gerenciamento de banco de dados relacional de código aberto, conhecido por sua confiabilidade e recursos avançados.
+### 💬 **Sistema de Comentários**  
+- Usuários podem deixar **comentários** sobre obras cadastradas, promovendo feedback entre leitores e autores.  
+- O sistema de comentários incentiva discussões construtivas sobre cada obra apresentada.  
 
-- [Maven](https://maven.apache.org/) - Uma ferramenta de automação de construção e gerenciamento de dependências amplamente utilizada para projetos Java. O Maven simplifica o processo de construção e gerenciamento de projetos, facilitando a integração de bibliotecas e o gerenciamento de dependências.
+---
 
+## 🛠️ Tecnologias Utilizadas  
 
-## Dependências
+- [Java 21](https://www.oracle.com/java/technologies/javase-jdk21-downloads.html) ☕ - Linguagem de programação moderna e eficiente.  
+- [Spring Framework](https://spring.io/) 💚 - Framework sólido para construção de aplicativos web e APIs robustas.  
+- [PostgreSQL](https://www.postgresql.org/) 📓 - Banco de dados relacional confiável e de alto desempenho.  
+- [Maven](https://maven.apache.org/) ⚖️ - Ferramenta para automação e gerenciamento de dependências.  
 
-| Dependências | Link |
-| ------ | ------ |
-| Lombok | [https://projectlombok.org/setup/maven] |
-| PostgreSQL | [https://mvnrepository.com/artifact/org.postgresql/postgresql] |
-| Spring Validation | [https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation]|
+---
 
+## 📦 Dependências  
 
-## Instalação
+| Dependência              | Link                                                                                   |  
+|--------------------------|----------------------------------------------------------------------------------------|  
+| **Lombok**               | [Lombok Setup](https://projectlombok.org/setup/maven)                                  |  
+| **PostgreSQL**           | [PostgreSQL Driver](https://mvnrepository.com/artifact/org.postgresql/postgresql)      |  
+| **Spring Validation**    | [Spring Validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation)|  
 
-### Configurações do Banco de Dados:
+---
 
-1. Abra o arquivo `application.properties`.
-2. Modifique as seguintes propriedades com as informações do seu PostgreSQL:
+## 🚀 Instalação  
 
-   ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/chronicles
-   spring.datasource.username=seu_usuario
+### 🗄️ Configurações do Banco de Dados  
+
+1. **Abra o arquivo** `application.properties` na pasta do projeto.  
+2. Substitua as configurações padrão com as informações do seu banco de dados PostgreSQL:  
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/chronicles  
+   spring.datasource.username=seu_usuario  
    spring.datasource.password=sua_senha
-   ```
-3. Certifique-se de que o driver PostgreSQL está corretamente configurado:
-    ```properties
-    spring.datasource.driverClassName=org.postgresql.Driver
-    ```
-4. Certifique-se de que o driver PostgreSQL está corretamente configurado:
-    ```properties
-    spring.datasource.driverClassName=org.postgresql.Driver
-    ```
-5. Configure o Hibernate para atualizar automaticamente o esquema do banco de dados:
-    ```properties
-    spring.jpa.hibernate.ddl-auto=update
-    ```
-6. Defina o dialeto do Hibernate para PostgreSQL:
-    ```properties
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-    ```
- ## Inicie o Chronicles API:
- 
-- Após configurar as propriedades, você está pronto para iniciar o  Chronicles API em seu ambiente local.
-Certifique-se de substituir seu_usuario e sua_senha pelas credenciais corretas do seu PostgreSQL. Este é um guia básico para configurar o ambiente. Certifique-se de adaptar as configurações conforme necessário para o seu ambiente específico.
+```
+
+3. Verifique o driver do banco de dados:  
+
+```properties
+spring.datasource.driverClassName=org.postgresql.Driver
+```
+
+4. Configure o Hibernate para gerenciar o esquema automaticamente:  
+
+```properties
+spring.jpa.hibernate.ddl-auto=update
+```
+
+5. Defina o **dialeto do Hibernate** para PostgreSQL:  
+
+```properties
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+```
+
+---
+
+### ▶️ Inicializando o Sistema  
+
+- Após configurar o `application.properties` com os valores corretos, inicie a aplicação localmente utilizando:  
+
+```shell script
+mvn spring-boot:run
+```
+
+- Certifique-se de que seu banco de dados PostgreSQL esteja ativo e configurado conforme os parâmetros definidos.  
+
+---
+
+## 📝 Notas Adicionais  
+
+- Substitua `seu_usuario` e `sua_senha` com as credenciais apropriadas para acessar o PostgreSQL no seu ambiente.  
+- Caso necessário, ajuste os valores padrões de configuração para atender às demandas do projeto ou ambiente de produção.  
+
+Este guia oferece um ponto de partida para configurar e executar o **Chronicles API** com rapidez e eficiência. 🚀  
