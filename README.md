@@ -58,8 +58,8 @@
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/chronicles  
-   spring.datasource.username=seu_usuario  
-   spring.datasource.password=sua_senha
+spring.datasource.username=seu_usuario  
+spring.datasource.password=sua_senha
 ```
 
 3. Verifique o driver do banco de dados:  
